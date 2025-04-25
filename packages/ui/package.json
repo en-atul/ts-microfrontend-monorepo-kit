@@ -1,0 +1,8 @@
+{
+	"name": "@ts-microfrontend-monorepo-kit/ui",
+	"version": "1.0.0",
+	"packageManager": "yarn@3.6.4",
+	"peerDependencies": {
+		"react": "*"
+	}
+}

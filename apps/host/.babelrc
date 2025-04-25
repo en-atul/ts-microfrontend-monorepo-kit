@@ -1,0 +1,10 @@
+{
+  "presets": [
+    "@babel/preset-env", // for modern JS features
+    "@babel/preset-react", // for JSX
+    "@babel/preset-typescript" // for TypeScript support
+  ],
+  "plugins": [
+    "react-refresh/babel" // for hot reloading in development
+  ]
+}
