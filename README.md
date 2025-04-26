@@ -1,35 +1,40 @@
-# 🔗 Module Federation Monorepo Webpack Kit
+# 🚀 Microfrontend Monorepo — Webpack 5 + Module Federation + React + TypeScript
 
-<!-- ![Banner](screenshots/banner.png)
+> In Progress
 
-A boilerplate setup for **Module Federation** using **Webpack**, designed for building scalable **micro-frontend** architectures. This kit provides a complete setup for both **host** and **remote** applications to share React components dynamically.
+A full-featured monorepo boilerplate for building scalable **microfrontend** applications using
+**Webpack Module Federation**, **React**, **TypeScript**, and support for **CSS/SCSS Modules**.  
+Includes secure Express middleware to protect remote module access based on allowed origins.
 
-## 🚀 Features
+---
 
-- 🎯 **Webpack 5** with Module Federation: Seamless sharing of code across independent apps.
-- ⚛️ **React + TypeScript**: Fully typed setup with React best practices.
-- 🔥 **Hot Module Replacement**: Built-in React Fast Refresh for blazing-fast development.
-- 🧩 **Multiple Environments**: Easily configure **development**, **staging**, and **production**.
-- 🛡️ **Secured Remote Access**: Protects remote modules with custom Express middleware.
-- 📦 **Optimized Builds**: Production-ready with tree shaking, minification, and code splitting.
+## ✨ Features
+
+- 🛠 **Webpack 5** + **Module Federation**: Share components between independently deployed apps.
+- ⚛️ **React 18** + **TypeScript**: Strong typing and best-in-class developer experience.
+- 🎨 **CSS**, **SCSS**, and **CSS Modules**: Flexible styling support out-of-the-box.
+- 🔥 **Hot Module Replacement**: Fast refresh support for instant development feedback.
+- 🔒 **Secured Microfrontends**: Express middleware validates allowed origins.
+- 📦 **Optimized Builds**: Production-ready configs with tree shaking and code splitting.
 
 ---
 
 ## 🛠️ Prerequisites
 
-Make sure you have the following installed:
+Ensure you have the following installed:
 
-- [Node.js](https://nodejs.org/) (v20 or higher)
+- [Node.js](https://nodejs.org/) (v20+ recommended)
+- [pnpm](https://pnpm.io/)
 
 ---
 
 ## 📦 Installation
 
-1. **Clone the repo**
+1. **Clone this repository**
 
 ```bash
-git clone https://github.com/your-username/module-federation-webpack-kit.git
-cd module-federation-webpack-kit
+git clone https://github.com/your-username/ts-microfrontend-monorepo-kit.git
+cd microfrontend-monorepo
 ```
 
 2. **Install dependencies**
@@ -42,11 +47,12 @@ pnpm install
 
 ---
 
-## ⚡️ Development
+## ⚡️ Development Workflow
 
-This project includes a **host** and a **remote** application with pre-configured **Module Federation** settings. You can run both to see them working together!
+This monorepo includes multiple microfrontend apps (both hosts and remotes). You can run them
+separately or together.
 
-### 🧑‍✈️ Run the Host App
+### 🧑‍✈️ Start the Host App
 
 ```bash
 npm run start:host
@@ -54,9 +60,9 @@ npm run start:host
 pnpm start:host
 ```
 
-> 🌐 Runs on [http://localhost:3000](http://localhost:3000)
+> 🌐 Available at [http://localhost:3000](http://localhost:3000)
 
-### 🛰️ Run the Remote App
+### 🛰️ Start the Remote App
 
 ```bash
 npm run start:remote
@@ -64,88 +70,63 @@ npm run start:remote
 pnpm start:remote
 ```
 
-> 🌐 Runs on [http://localhost:3001](http://localhost:3001)
+> 🌐 Available at [http://localhost:3001](http://localhost:3001)
 
 ---
 
-## 🔐 Securing Remote App Access
+## 🔐 Securing Remote Modules
 
-The remote app is served using an **Express** server that includes customizable **middleware** for security. This ensures only authorized access to your exposed modules.
+Remote apps are served using an **Express** server with **custom middleware** to protect module
+federation endpoints.
 
-🔒 Middleware can be configured to:
+Middleware functionality:
 
-- ✅ Allowlist specific hosts
-- 🪪 Require auth tokens
-- 🌍 Restrict by environment or IP
-- 🛑 Block unwanted requests before serving federated modules
+- ✅ Only allow requests from whitelisted origins
+- 🛡️ Block unauthorized or suspicious requests
+- 🧩 Easily customizable to add auth, IP restrictions, etc.
 
-Example logic is in `server.js`. Modify it to suit your team’s needs!
+> 📝 Modify `server/middleware/allowedOrigins.ts` to adjust the security logic.
 
 ---
 
-## 🔧 Webpack Configs
+## 🔧 Webpack Configuration Overview
 
-### 📁 `webpack.common.ts`
+- **webpack.common.ts**: Shared Webpack config.
+- **webpack.dev.ts**: Development config with source maps and HMR.
+- **webpack.prod.ts**: Optimized production build with tree shaking and minification.
+- **ModuleFederationPlugin**: Used to expose or consume remote modules dynamically at runtime.
 
-Shared config used by both host and remote.
-
-### 🧪 `webpack.dev.ts`
-
-Development-only config:
-
-- HMR
-- Fast Refresh
-- Source maps
-
-### 🏗️ `webpack.prod.ts`
-
-Production config:
-
-- Minification
-- Tree shaking
-- Module federation
-
-### 🧬 `ModuleFederationPlugin` Usage
-
-**Remote App**
+Example Remote Config:
 
 ```ts
 new ModuleFederationPlugin({
-  name: "remoteApp",
-  filename: "remoteEntry.js",
-  exposes: {
-    "./RemoteComponent": "./src/components/RemoteComponent",
-  },
-  shared: {
-    react: { singleton: true, eager: true, requiredVersion: deps.react },
-    "react-dom": {
-      singleton: true,
-      eager: true,
-      requiredVersion: deps["react-dom"],
-    },
-  },
+	name: 'remoteApp',
+	filename: 'remoteEntry.js',
+	exposes: {
+		'./Button': './src/components/Button',
+	},
+	shared: {
+		react: { singleton: true, eager: true },
+		'react-dom': { singleton: true, eager: true },
+	},
 });
 ```
 
-**Host App**
-
-```ts
-const RemoteComponent = React.lazy(() => import("remoteApp/RemoteComponent"));
-```
-
-Use it like this:
+Example Host Usage:
 
 ```tsx
-<Suspense fallback={<div>Loading Remote Component...</div>}>
-  <RemoteComponent />
-</Suspense>
+const RemoteButton = React.lazy(() => import('remoteApp/Button'));
+
+<Suspense fallback={<div>Loading...</div>}>
+	<RemoteButton />
+</Suspense>;
 ```
 
 ---
 
 ## 🏗️ Building for Production
 
-### Build the Host
+### Build Host App
 
 ```bash
 npm run build:host
@@ -153,7 +134,7 @@ npm run build:host
 pnpm build:host
 ```
 
-### Build the Remote
+### Build Remote App
 
 ```bash
 npm run build:remote
@@ -161,62 +142,53 @@ npm run build:remote
 pnpm build:remote
 ```
 
-> Outputs go to the `dist/` directory.
+Outputs are placed in the `dist/` directory, ready for deployment 🚀.
 
 ---
 
-## 🌐 Environment Modes
+## 🌐 Multi-Environment Support
 
-You can build apps for multiple environments (e.g. `development`, `staging`, `production`) using custom `NODE_ENV` values.
+Environment-specific builds are easy to configure using `NODE_ENV` values (e.g., `development`,
+`staging`, `production`).
 
-Example for staging:
+Example (for staging):
 
-```json
-"build:staging": "NODE_ENV=staging webpack --config webpack.config.js --mode production"
+```bash
+"build:staging:host": "NODE_ENV=staging webpack --config webpack.prod.ts"
 ```
 
-Staging runs in **production mode** to reflect real behavior but uses separate configs or env variables.
+---
+
+## 💡 How Microfrontends Work
+
+1. **Remote apps** expose components using `ModuleFederationPlugin`.
+2. **Host apps** dynamically load these components using `React.lazy` at runtime.
+3. **Express middleware** ensures only trusted requests reach remote modules.
+4. **Independent deployment**: Update one app without affecting the others!
 
 ---
 
-## 🧩 How It Works
+## 🧠 Developer Tips
 
-1. Remote exposes components with `ModuleFederationPlugin`.
-2. Host dynamically imports these components with `React.lazy`.
-3. At runtime, Webpack loads them from the remote server!
+- 🔥 Use Hot Module Replacement for faster dev cycles.
+- 🔒 Keep the middleware updated for better security practices.
+- ⚙️ Customize Webpack settings as needed for new features (e.g., SASS loader tweaks).
+- 🧪 Wrap remote components in error boundaries for safer imports.
 
-> This makes each app independently deployable while still being integrated.
-
----
-
-## 🧠 Dev Workflow Tips
-
-1. ✅ Start **host** and **remote** apps.
-2. 🛠️ Add new components in the remote and expose them.
-3. 🧲 Lazy load new components in the host.
-4. 🔒 Use middleware to secure remote in non-dev environments.
-5. 🚀 Deploy independently!
-
----
-
-## 🧪 Example Error Handling
-
-If the remote app fails to load, avoid crashing the app:
+Example Error Handling:
 
 ```tsx
-<Suspense fallback={<div>Loading Remote Component...</div>}>
-  <ErrorBoundary fallback={<div>Failed to load remote component.</div>}>
-    <RemoteComponent />
-  </ErrorBoundary>
+<Suspense fallback={<div>Loading...</div>}>
+	<ErrorBoundary fallback={<div>Failed to load remote module.</div>}>
+		<RemoteComponent />
+	</ErrorBoundary>
 </Suspense>
 ```
 
-> Wrap lazy imports in an error boundary for safety 🚧
-
 ---
 
-## 💬 Questions or Feedback?
+## 💬 Questions? Feedback?
 
-Feel free to open issues, submit PRs, or just ⭐️ the repo if you like it!
+Feel free to open an issue, suggest improvements, or ⭐️ the repo if you find it helpful!
 
---- -->
+---

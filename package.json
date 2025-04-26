@@ -2,10 +2,6 @@
   "private": true,
   "name": "ts-microfrontend-monorepo-kit",
   "version": "1.0.0",
-  "workspaces": [
-    "packages/*",
-    "apps/*"
-  ],
   "description": "A modern monorepo boilerplate for building scalable microfrontend applications from scratch — powered by Webpack 5 Module Federation, Yarn Workspaces, and Lerna.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
