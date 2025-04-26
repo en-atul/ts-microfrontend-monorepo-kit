@@ -8,7 +8,9 @@ const webpackConfig = require('./webpack.config');
 const app = express();
 const compiler = webpack(webpackConfig);
 
-const PORT = 3001;
+const HOST = process.env.HOST || 'localhost';
+const PORT = process.env.PORT || 3001;
+const PROTOCOL = process.env.PROTOCOL || (process.env.NODE_ENV === 'production' ? 'https' : 'http');
 
 const allowedOrigins = ['http://localhost:3000/'];
 const isDevelopment = process.env.MODE === 'development';
@@ -31,9 +33,7 @@ if (isDevelopment) {
 			stats: 'minimal',
 		}),
 	);
-	app.use(
-		webpackHotMiddleware(compiler),
-	);
+	app.use(webpackHotMiddleware(compiler));
 } else {
 	// Static file handling for production
 	app.use(express.static(path.resolve(__dirname, 'dist')));
@@ -49,5 +49,5 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-	console.log(`🚀 Remote app running at http://localhost:${PORT}`);
+	console.log(`\n🚀 [\x1b[35mRemote App\x1b[0m] running at ${PROTOCOL}://${HOST}:${PORT}\n`);
 });

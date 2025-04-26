@@ -16,6 +16,10 @@ for (let i = 0; i < REMOTES.length; i++) {
 	remotes[REMOTES[i].split('@')[0]] = REMOTES[i];
 }
 
+const HOST = process.env.HOST || 'localhost';
+const PORT = process.env.PORT || configs.PORT;
+const PROTOCOL = process.env.PROTOCOL || (process.env.NODE_ENV === 'production' ? 'https' : 'http');
+
 module.exports = {
 	mode: 'development',
 	devtool: 'cheap-module-source-map',
@@ -27,8 +31,15 @@ module.exports = {
 		hot: true,
 		open: true,
 		historyApiFallback: true,
+		onListening: () => {
+			console.log(`\n🚀 [\x1b[35mHost App\x1b[0m] running at ${PROTOCOL}://${HOST}:${PORT}\n`);
+		},
 	},
-
+	// https://webpack.js.org/configuration/infrastructureLogging/
+	// Configure infrastructure logging to only show errors
+	infrastructureLogging: { level: 'error' },
+	// Minimize the amount of output in the terminal
+	stats: 'minimal',
 	plugins: [
 		new ModuleFederationPlugin({
 			name: configs.appName,
