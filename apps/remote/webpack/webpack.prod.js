@@ -1,9 +1,7 @@
-const { merge } = require("webpack-merge");
-const common = require("./webpack.common");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
-module.exports = merge(common, {
+module.exports = {
   mode: "production",
   devtool: "source-map",
 
@@ -17,7 +15,6 @@ module.exports = merge(common, {
     rules: [
       {
         test: /\.s?css$/,
-
         use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
     ],
@@ -27,4 +24,4 @@ module.exports = merge(common, {
     new MiniCssExtractPlugin({ filename: "[name].[contenthash].css" }),
     new CleanWebpackPlugin(),
   ],
-});
+};

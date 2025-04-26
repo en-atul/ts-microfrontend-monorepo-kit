@@ -1,14 +1,13 @@
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
-const deps = require('./package.json').dependencies;
-const webpack = require('webpack');
+const deps = require('../package.json').dependencies;
 
 const configs = {
-	appName: 'remoteApp',
+	appName: 'hostApp',
 	appFileName: 'remoteEntry.js',
-	PORT: 3001,
-	PUBLIC_PATH: 'http://localhost:3001/',
-	REMOTES: ['hostApp@http://localhost:3000/remoteEntry.js'],
+	PORT: 3000,
+	PUBLIC_PATH: 'http://localhost:3000/',
+	REMOTES: ['remoteApp@http://localhost:3001/remoteEntry.js'],
 };
 
 let remotes = {};
@@ -20,19 +19,21 @@ for (let i = 0; i < REMOTES.length; i++) {
 module.exports = {
 	mode: 'development',
 	devtool: 'cheap-module-source-map',
-	entry: {
-		main: ['webpack-hot-middleware/client', './src/index.tsx'],
-	},
 	output: {
 		publicPath: configs.PUBLIC_PATH,
 	},
+	devServer: {
+		port: configs.PORT,
+		hot: true,
+		open: true,
+		historyApiFallback: true,
+	},
+
 	plugins: [
 		new ModuleFederationPlugin({
 			name: configs.appName,
 			filename: configs.appFileName,
-			exposes: {
-				'./RemoteComponent': './src/RemoteComponent',
-			},
+			exposes: {},
 			remotes,
 			shared: {
 				...deps,
@@ -49,6 +50,5 @@ module.exports = {
 			},
 		}),
 		new ReactRefreshWebpackPlugin(),
-		new webpack.HotModuleReplacementPlugin(),
 	],
 };

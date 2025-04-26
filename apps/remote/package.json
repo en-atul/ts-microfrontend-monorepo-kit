@@ -3,8 +3,8 @@
 	"version": "1.0.0",
 	"license": "MIT",
 	"scripts": {
-		"build": "NODE_ENV=production webpack --config webpack.config.js",
-		"start": "NODE_ENV=development node server.js"
+		"build": "MODE=production webpack --config webpack/webpack.config.js",
+		"start": "MODE=development node webpack/webpack.server.js"
 	},
 	"dependencies": {
 		"express": "^5.1.0",
