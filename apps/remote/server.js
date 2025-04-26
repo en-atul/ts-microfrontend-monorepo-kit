@@ -9,7 +9,7 @@ const compiler = webpack(webpackConfig);
 
 const PORT = 3001;
 
-const allowedOrigins = ["http://localhost:3002/"];
+const allowedOrigins = ["http://localhost:3000/"];
 const isDevelopment = process.env.NODE_ENV === "development";
 
 app.use("/remoteEntry.js", (req, res, next) => {

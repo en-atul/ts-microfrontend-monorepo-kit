@@ -1,5 +1,25 @@
-import React from "react";
+import React from 'react';
+import { Button } from '@ts-microfrontend-monorepo-kit/ui';
 
 export default function RemoteComponent() {
-  return <div>Remote Component</div>;
+	const [count, setCount] = React.useState(0);
+
+	const onIncrement = () => {
+		setCount((prev) => prev + 1);
+	};
+
+	const onDecrement = () => {
+		setCount((prev) => prev - 1);
+	};
+
+	return (
+		<div>
+			<h1>Remote Component</h1>
+			<p>Count: {count}</p>
+			<div>
+				<Button onClick={onIncrement}>Increment</Button>
+				<Button onClick={onDecrement}>Decrement</Button>
+			</div>
+		</div>
+	);
 }

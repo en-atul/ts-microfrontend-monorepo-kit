@@ -1,15 +1,26 @@
 {
-  "compilerOptions": {
-    "target": "ES6",
-    "module": "ESNext",
-    "jsx": "react-jsx",
-    "baseUrl": "./src",
-    "paths": {
-      "@/*": ["*"]
-    },
-    "esModuleInterop": true,
-    "moduleResolution": "node",
-    "skipLibCheck": true,
-    "strict": true
-  }
+	"compilerOptions": {
+		"target": "ES6",
+		"module": "esnext",
+		"jsx": "react-jsx",
+		"baseUrl": ".",
+		"paths": {
+			"~/*": [
+				"*"
+			]
+		},
+		"esModuleInterop": true,
+		"moduleResolution": "node",
+		"skipLibCheck": true,
+		"strict": true,
+		"composite": true
+	},
+	"include": [
+		"packages/**/*",
+		"apps/**/*"
+	],
+	"exclude": [
+		"**/node_modules/**",
+		"**/dist/**"
+	]
 }
