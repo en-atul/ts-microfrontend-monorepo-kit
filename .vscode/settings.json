@@ -1,0 +1,17 @@
+{
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit"
+	},
+	"eslint.validate": [
+	  "javascript", 
+	  "typescript", 
+	  "javascriptreact", 
+	  "typescriptreact"
+	],
+	"eslint.workingDirectories": [{ "mode": "auto" }], // Auto-detect ESLint working directories
+	"typescript.tsdk": "node_modules/typescript/lib", // Ensure TypeScript IntelliSense is using your project's TypeScript version
+	"files.autoSave": "onFocusChange", // Automatically save files on focus change (optional)
+	"editor.formatOnSave": true, // Enable formatting on save
+	"editor.formatOnPaste": true // Enable formatting on paste
+  }
+  
