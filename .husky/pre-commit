@@ -1,0 +1,6 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+chmod +x scripts/check-pnpm.sh
+
+sh scripts/check-pnpm.sh
