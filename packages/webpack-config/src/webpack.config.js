@@ -1,5 +1,5 @@
 import { merge } from 'webpack-merge';
-import { setCommonConfig } from './webpack.common.js';
+import { getCommonConfig } from './webpack.common.js';
 import devConfig from './webpack.dev.js';
 import prodConfig from './webpack.prod.js';
 
@@ -10,10 +10,10 @@ const getConfig = ({ baseUrl, aliases, configs, deps }) => {
 	if (MODE === 'development') {
 		envConfig = devConfig({ baseUrl, configs: configs.development, deps });
 	} else {
-		envConfig = prodConfig;
+		envConfig = prodConfig({ baseUrl, configs: configs.production, deps });
 	}
 
-	const commonConfig = setCommonConfig({ baseUrl, aliases });
+	const commonConfig = getCommonConfig({ baseUrl, aliases });
 	return merge(commonConfig, envConfig);
 };
 
