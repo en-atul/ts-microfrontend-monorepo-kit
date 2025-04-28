@@ -22,12 +22,11 @@ export default ({ baseUrl, configs, deps }) => {
 		exposes[`./${k}`] = path.join(SRC, v);
 	}
 
-	// 'webpack-hot-middleware/client',
 	return {
 		mode: 'development',
 		devtool: 'cheap-module-source-map',
 		entry: {
-			main: [path.join(SRC, 'index.tsx')],
+			main: ['webpack-hot-middleware/client', path.join(SRC, 'index.tsx')],
 		},
 		output: {
 			publicPath: configs.PUBLIC_PATH,

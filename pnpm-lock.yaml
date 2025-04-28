@@ -42,9 +42,6 @@ importers:
       babel-loader:
         specifier: ^10.0.0
         version: 10.0.0(@babel/core@7.26.10)(webpack@5.99.7)
-      dotenv-webpack:
-        specifier: ^8.1.0
-        version: 8.1.0(webpack@5.99.7)
       eslint:
         specifier: 8.0.0
         version: 8.0.0
@@ -63,9 +60,6 @@ importers:
       eslint-plugin-react-hooks:
         specifier: ^5.2.0
         version: 5.2.0(eslint@8.0.0)
-      html-webpack-plugin:
-        specifier: ^5.6.3
-        version: 5.6.3(webpack@5.99.7)
       husky:
         specifier: 6.0.0
         version: 6.0.0
@@ -93,8 +87,6 @@ importers:
       typescript:
         specifier: 5.8.3
         version: 5.8.3
-
-  apps/configs: {}
 
   apps/host:
     dependencies:
@@ -126,24 +118,42 @@ importers:
       autoprefixer:
         specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.3)
+      css-loader:
+        specifier: ^7.1.2
+        version: 7.1.2(webpack@5.99.7)
+      file-loader:
+        specifier: ^6.2.0
+        version: 6.2.0(webpack@5.99.7)
       postcss:
         specifier: ^8.5.3
         version: 8.5.3
       postcss-loader:
         specifier: ^8.1.1
         version: 8.1.1(postcss@8.5.3)(typescript@5.8.3)(webpack@5.99.7)
+      sass:
+        specifier: ^1.87.0
+        version: 1.87.0
+      sass-loader:
+        specifier: ^16.0.5
+        version: 16.0.5(sass@1.87.0)(webpack@5.99.7)
+      style-loader:
+        specifier: ^4.0.0
+        version: 4.0.0(webpack@5.99.7)
+      ts-loader:
+        specifier: ^9.5.2
+        version: 9.5.2(typescript@5.8.3)(webpack@5.99.7)
+      url-loader:
+        specifier: ^4.1.1
+        version: 4.1.1(file-loader@6.2.0(webpack@5.99.7))(webpack@5.99.7)
+      webpack-hot-middleware:
+        specifier: ^2.26.1
+        version: 2.26.1
 
   apps/remote:
     dependencies:
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
-      express:
-        specifier: ^5.1.0
-        version: 5.1.0
-      http-proxy-middleware:
-        specifier: ^3.0.5
-        version: 3.0.5
       react:
         specifier: ^19.1.0
         version: 19.1.0
@@ -157,9 +167,6 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
-      '@svgr/webpack':
-        specifier: ^8.1.0
-        version: 8.1.0(typescript@5.8.3)
       '@types/react':
         specifier: ^19.1.2
         version: 19.1.2
@@ -169,57 +176,36 @@ importers:
       autoprefixer:
         specifier: ^10.4.21
         version: 10.4.21(postcss@8.5.3)
-      clean-webpack-plugin:
-        specifier: ^4.0.0
-        version: 4.0.0(webpack@5.99.7(webpack-cli@6.0.1))
       css-loader:
         specifier: ^7.1.2
-        version: 7.1.2(webpack@5.99.7(webpack-cli@6.0.1))
+        version: 7.1.2(webpack@5.99.7)
       file-loader:
         specifier: ^6.2.0
-        version: 6.2.0(webpack@5.99.7(webpack-cli@6.0.1))
-      mini-css-extract-plugin:
-        specifier: ^2.9.2
-        version: 2.9.2(webpack@5.99.7(webpack-cli@6.0.1))
+        version: 6.2.0(webpack@5.99.7)
       postcss:
         specifier: ^8.5.3
         version: 8.5.3
       postcss-loader:
         specifier: ^8.1.1
-        version: 8.1.1(postcss@8.5.3)(typescript@5.8.3)(webpack@5.99.7(webpack-cli@6.0.1))
+        version: 8.1.1(postcss@8.5.3)(typescript@5.8.3)(webpack@5.99.7)
       sass:
         specifier: ^1.87.0
         version: 1.87.0
       sass-loader:
         specifier: ^16.0.5
-        version: 16.0.5(sass@1.87.0)(webpack@5.99.7(webpack-cli@6.0.1))
+        version: 16.0.5(sass@1.87.0)(webpack@5.99.7)
       style-loader:
         specifier: ^4.0.0
-        version: 4.0.0(webpack@5.99.7(webpack-cli@6.0.1))
+        version: 4.0.0(webpack@5.99.7)
       ts-loader:
         specifier: ^9.5.2
-        version: 9.5.2(typescript@5.8.3)(webpack@5.99.7(webpack-cli@6.0.1))
+        version: 9.5.2(typescript@5.8.3)(webpack@5.99.7)
       url-loader:
         specifier: ^4.1.1
-        version: 4.1.1(file-loader@6.2.0(webpack@5.99.7(webpack-cli@6.0.1)))(webpack@5.99.7(webpack-cli@6.0.1))
-      webpack:
-        specifier: ^5.99.6
-        version: 5.99.7(webpack-cli@6.0.1)
-      webpack-cli:
-        specifier: ^6.0.1
-        version: 6.0.1(webpack-dev-server@5.2.1)(webpack@5.99.7)
-      webpack-dev-middleware:
-        specifier: ^7.4.2
-        version: 7.4.2(webpack@5.99.7(webpack-cli@6.0.1))
-      webpack-dev-server:
-        specifier: ^5.2.1
-        version: 5.2.1(webpack-cli@6.0.1)(webpack@5.99.7)
+        version: 4.1.1(file-loader@6.2.0(webpack@5.99.7))(webpack@5.99.7)
       webpack-hot-middleware:
         specifier: ^2.26.1
         version: 2.26.1
-      webpack-merge:
-        specifier: ^6.0.1
-        version: 6.0.1
 
   packages/eslint-config:
     devDependencies:
@@ -301,6 +287,9 @@ importers:
       express:
         specifier: ^5.1.0
         version: 5.1.0
+      http-proxy-middleware:
+        specifier: ^3.0.5
+        version: 3.0.5
     devDependencies:
       '@svgr/webpack':
         specifier: ^8.1.0
@@ -308,36 +297,15 @@ importers:
       clean-webpack-plugin:
         specifier: ^4.0.0
         version: 4.0.0(webpack@5.99.7(webpack-cli@6.0.1))
-      css-loader:
-        specifier: ^7.1.2
-        version: 7.1.2(webpack@5.99.7(webpack-cli@6.0.1))
       dotenv-webpack:
         specifier: ^8.1.0
         version: 8.1.0(webpack@5.99.7(webpack-cli@6.0.1))
-      file-loader:
-        specifier: ^6.2.0
-        version: 6.2.0(webpack@5.99.7(webpack-cli@6.0.1))
       html-webpack-plugin:
         specifier: ^5.6.3
         version: 5.6.3(webpack@5.99.7(webpack-cli@6.0.1))
       mini-css-extract-plugin:
         specifier: ^2.9.2
         version: 2.9.2(webpack@5.99.7(webpack-cli@6.0.1))
-      sass:
-        specifier: ^1.87.0
-        version: 1.87.0
-      sass-loader:
-        specifier: ^16.0.5
-        version: 16.0.5(sass@1.87.0)(webpack@5.99.7(webpack-cli@6.0.1))
-      style-loader:
-        specifier: ^4.0.0
-        version: 4.0.0(webpack@5.99.7(webpack-cli@6.0.1))
-      ts-loader:
-        specifier: ^9.5.2
-        version: 9.5.2(typescript@5.8.3)(webpack@5.99.7(webpack-cli@6.0.1))
-      url-loader:
-        specifier: ^4.1.1
-        version: 4.1.1(file-loader@6.2.0(webpack@5.99.7(webpack-cli@6.0.1)))(webpack@5.99.7(webpack-cli@6.0.1))
       webpack:
         specifier: ^5.99.6
         version: 5.99.7(webpack-cli@6.0.1)
@@ -9166,7 +9134,7 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  css-loader@7.1.2(webpack@5.99.7(webpack-cli@6.0.1)):
+  css-loader@7.1.2(webpack@5.99.7):
     dependencies:
       icss-utils: 5.1.0(postcss@8.5.3)
       postcss: 8.5.3
@@ -9177,7 +9145,7 @@ snapshots:
       postcss-value-parser: 4.2.0
       semver: 7.7.1
     optionalDependencies:
-      webpack: 5.99.7(webpack-cli@6.0.1)
+      webpack: 5.99.7
 
   css-select@4.3.0:
     dependencies:
@@ -9397,11 +9365,6 @@ snapshots:
     dependencies:
       dotenv-defaults: 2.0.2
       webpack: 5.99.7(webpack-cli@6.0.1)
-
-  dotenv-webpack@8.1.0(webpack@5.99.7):
-    dependencies:
-      dotenv-defaults: 2.0.2
-      webpack: 5.99.7
 
   dotenv@16.4.7: {}
 
@@ -10026,11 +9989,11 @@ snapshots:
     dependencies:
       flat-cache: 4.0.1
 
-  file-loader@6.2.0(webpack@5.99.7(webpack-cli@6.0.1)):
+  file-loader@6.2.0(webpack@5.99.7):
     dependencies:
       loader-utils: 2.0.4
       schema-utils: 3.3.0
-      webpack: 5.99.7(webpack-cli@6.0.1)
+      webpack: 5.99.7
 
   filelist@1.0.4:
     dependencies:
@@ -10388,16 +10351,6 @@ snapshots:
       tapable: 2.2.1
     optionalDependencies:
       webpack: 5.99.7(webpack-cli@6.0.1)
-
-  html-webpack-plugin@5.6.3(webpack@5.99.7):
-    dependencies:
-      '@types/html-minifier-terser': 6.1.0
-      html-minifier-terser: 6.1.0
-      lodash: 4.17.21
-      pretty-error: 4.0.0
-      tapable: 2.2.1
-    optionalDependencies:
-      webpack: 5.99.7
 
   htmlparser2@6.1.0:
     dependencies:
@@ -10927,7 +10880,7 @@ snapshots:
 
   jest-diff@29.7.0:
     dependencies:
-      chalk: 4.1.0
+      chalk: 4.1.2
       diff-sequences: 29.6.3
       jest-get-type: 29.6.3
       pretty-format: 29.7.0
@@ -11804,7 +11757,7 @@ snapshots:
       '@yarnpkg/parsers': 3.0.2
       '@zkochan/js-yaml': 0.0.7
       axios: 1.9.0
-      chalk: 4.1.0
+      chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-spinners: 2.6.1
       cliui: 8.0.1
@@ -11938,7 +11891,7 @@ snapshots:
   ora@5.3.0:
     dependencies:
       bl: 4.1.0
-      chalk: 4.1.0
+      chalk: 4.1.2
       cli-cursor: 3.1.0
       cli-spinners: 2.6.1
       is-interactive: 1.0.0
@@ -12150,17 +12103,6 @@ snapshots:
       find-up: 4.1.0
 
   possible-typed-array-names@1.1.0: {}
-
-  postcss-loader@8.1.1(postcss@8.5.3)(typescript@5.8.3)(webpack@5.99.7(webpack-cli@6.0.1)):
-    dependencies:
-      cosmiconfig: 9.0.0(typescript@5.8.3)
-      jiti: 1.21.7
-      postcss: 8.5.3
-      semver: 7.7.1
-    optionalDependencies:
-      webpack: 5.99.7(webpack-cli@6.0.1)
-    transitivePeerDependencies:
-      - typescript
 
   postcss-loader@8.1.1(postcss@8.5.3)(typescript@5.8.3)(webpack@5.99.7):
     dependencies:
@@ -12553,12 +12495,12 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sass-loader@16.0.5(sass@1.87.0)(webpack@5.99.7(webpack-cli@6.0.1)):
+  sass-loader@16.0.5(sass@1.87.0)(webpack@5.99.7):
     dependencies:
       neo-async: 2.6.2
     optionalDependencies:
       sass: 1.87.0
-      webpack: 5.99.7(webpack-cli@6.0.1)
+      webpack: 5.99.7
 
   sass@1.87.0:
     dependencies:
@@ -12973,9 +12915,9 @@ snapshots:
       minimist: 1.2.8
       through: 2.3.8
 
-  style-loader@4.0.0(webpack@5.99.7(webpack-cli@6.0.1)):
+  style-loader@4.0.0(webpack@5.99.7):
     dependencies:
-      webpack: 5.99.7(webpack-cli@6.0.1)
+      webpack: 5.99.7
 
   supports-color@7.2.0:
     dependencies:
@@ -13121,7 +13063,7 @@ snapshots:
       '@jest/types': 29.6.3
       babel-jest: 29.7.0(@babel/core@7.26.10)
 
-  ts-loader@9.5.2(typescript@5.8.3)(webpack@5.99.7(webpack-cli@6.0.1)):
+  ts-loader@9.5.2(typescript@5.8.3)(webpack@5.99.7):
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.18.1
@@ -13129,7 +13071,7 @@ snapshots:
       semver: 7.7.1
       source-map: 0.7.4
       typescript: 5.8.3
-      webpack: 5.99.7(webpack-cli@6.0.1)
+      webpack: 5.99.7
 
   ts-node@10.9.2(@types/node@22.15.3)(typescript@5.8.3):
     dependencies:
@@ -13301,14 +13243,14 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  url-loader@4.1.1(file-loader@6.2.0(webpack@5.99.7(webpack-cli@6.0.1)))(webpack@5.99.7(webpack-cli@6.0.1)):
+  url-loader@4.1.1(file-loader@6.2.0(webpack@5.99.7))(webpack@5.99.7):
     dependencies:
       loader-utils: 2.0.4
       mime-types: 2.1.35
       schema-utils: 3.3.0
-      webpack: 5.99.7(webpack-cli@6.0.1)
+      webpack: 5.99.7
     optionalDependencies:
-      file-loader: 6.2.0(webpack@5.99.7(webpack-cli@6.0.1))
+      file-loader: 6.2.0(webpack@5.99.7)
 
   util-deprecate@1.0.2: {}
 

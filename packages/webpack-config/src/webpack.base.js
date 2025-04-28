@@ -8,7 +8,6 @@ const { __dirname } = getFilePaths(import.meta.url);
 const createBaseWebpackConfig = ({ srcPath, publicPath, aliases = {} }) => {
 	const ROOT = path.resolve(__dirname, '../../../');
 
-	console.log("------ROOT", ROOT);
 	const PACKAGES = {
 		ui: path.join(ROOT, 'packages/ui/src'),
 		utils: path.join(ROOT, 'packages/utils/src'),
