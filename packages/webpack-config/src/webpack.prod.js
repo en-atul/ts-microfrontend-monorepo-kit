@@ -1,6 +1,6 @@
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
-import { getFilePaths } from '../../configs/utils.js';
+import { getFilePaths } from './utils.js';
 
 const { __dirname } = getFilePaths(import.meta.url);
 
