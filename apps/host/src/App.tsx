@@ -1,9 +1,13 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import ErrorBoundary from './ErrorBoundary';
+import { toCall } from '@repo/utils/pathUtils';
 
 const RemoteComponent = React.lazy(() => import('remoteApp/RemoteComponent'));
 
 const App: React.FC = () => {
+	useEffect(() => {
+		toCall();
+	}, []);
 	return (
 		<div>
 			<h1>🚀 MF: Host App</h1>
