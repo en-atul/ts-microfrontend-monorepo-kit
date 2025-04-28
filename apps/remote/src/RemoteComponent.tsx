@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from '@ts-microfrontend-monorepo-kit/ui';
+import { Button } from '@repo/ui';
 
 export default function RemoteComponent() {
 	const [count, setCount] = React.useState(0);

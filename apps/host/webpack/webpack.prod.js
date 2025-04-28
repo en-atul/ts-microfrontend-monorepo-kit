@@ -1,7 +1,10 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import { getFilePaths } from '../../configs/utils.js';
 
-module.exports = {
+const { __dirname } = getFilePaths(import.meta.url);
+
+export default {
 	mode: 'production',
 	devtool: 'source-map',
 

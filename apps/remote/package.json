@@ -1,18 +1,22 @@
 {
-	"name": "@ts-microfrontend-monorepo-kit/remote-app",
+	"name": "@repo/remote-app",
 	"version": "1.0.0",
 	"license": "MIT",
+	"private": true,
 	"scripts": {
 		"build": "MODE=production webpack --config webpack/webpack.config.js",
 		"start": "MODE=development node webpack/webpack.server.js"
 	},
 	"dependencies": {
+		"@repo/ui": "workspace:*",
 		"express": "^5.1.0",
 		"http-proxy-middleware": "^3.0.5",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0"
 	},
 	"devDependencies": {
+		"@repo/eslint-config": "workspace:*",
+		"@repo/typescript-config": "workspace:*",
 		"@svgr/webpack": "^8.1.0",
 		"@types/react": "^19.1.2",
 		"@types/react-dom": "^19.1.2",

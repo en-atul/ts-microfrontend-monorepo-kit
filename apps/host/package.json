@@ -1,16 +1,22 @@
 {
-	"name": "@ts-microfrontend-monorepo-kit/host-app",
+	"name": "@repo/host-app",
 	"version": "1.0.0",
 	"license": "MIT",
+	"type": "module",
+	"private": true,
 	"scripts": {
 		"start": "MODE=development webpack serve --config webpack/webpack.config.js",
 		"build": "MODE=production webpack --config webpack/webpack.config.js"
 	},
 	"dependencies": {
+		"@repo/ui": "workspace:*",
+		"@repo/utils": "workspace:*",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0"
 	},
 	"devDependencies": {
+		"@repo/eslint-config": "workspace:*",
+		"@repo/typescript-config": "workspace:*",
 		"@svgr/webpack": "^8.1.0",
 		"@types/react": "^19.1.2",
 		"@types/react-dom": "^19.1.2",

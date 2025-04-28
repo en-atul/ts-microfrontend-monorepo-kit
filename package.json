@@ -1,11 +1,12 @@
 {
 	"private": true,
-	"name": "ts-microfrontend-monorepo-kit",
+	"name": "micro-frontend-monorepo",
 	"version": "1.0.0",
-	"description": "A modern monorepo boilerplate for building scalable microfrontend applications from scratch — powered by Webpack 5 Module Federation, Yarn Workspaces, and Lerna.",
+	"description": "A modern monorepo boilerplate for building scalable microfrontend applications from scratch — powered by Webpack 5 Module Federation, pnpm Workspaces, and Lerna.",
 	"scripts": {
-		"start:host": "pnpm --filter @ts-microfrontend-monorepo-kit/host-app start",
-		"start:remote": "pnpm --filter @ts-microfrontend-monorepo-kit/remote-app start"
+		"start:host": "pnpm --filter @repo/host-app start",
+		"start:remote": "pnpm --filter @repo/remote-app start",
+		"format": "prettier --write \"**/*.{ts,tsx,md}\""
 	},
 	"keywords": [
 		"monorepo",
@@ -50,5 +51,9 @@
 	},
 	"dependencies": {
 		"classnames": "^2.5.1"
+	},
+	"packageManager": "pnpm@9.0.0",
+	"engines": {
+		"node": ">=20"
 	}
 }

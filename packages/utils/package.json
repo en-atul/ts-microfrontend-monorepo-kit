@@ -1,5 +1,10 @@
 {
-	"name": "@ts-microfrontend-monorepo-kit/utils",
+	"name": "@repo/utils",
 	"version": "1.0.0",
-	"packageManager": "yarn@3.6.4"
+	"private": true,
+	"devDependencies": {
+		"@repo/eslint-config": "workspace:*",
+		"@repo/typescript-config": "workspace:*",
+		"@types/node": "^22.14.0"
+	}
 }

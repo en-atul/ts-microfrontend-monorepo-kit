@@ -1,7 +1,9 @@
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
-const deps = require('../package.json').dependencies;
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import ModuleFederationPlugin from 'webpack/lib/container/ModuleFederationPlugin.js';
+import { createRequire } from 'module';
+const packageJSON = createRequire(import.meta.url)('../package.json');
 
+const deps = packageJSON.dependencies;
 const configs = {
 	appName: 'hostApp',
 	appFileName: 'remoteEntry.js',
@@ -20,7 +22,7 @@ const HOST = process.env.HOST || 'localhost';
 const PORT = process.env.PORT || configs.PORT;
 const PROTOCOL = process.env.PROTOCOL || (process.env.NODE_ENV === 'production' ? 'https' : 'http');
 
-module.exports = {
+export default {
 	mode: 'development',
 	devtool: 'cheap-module-source-map',
 	output: {
@@ -29,7 +31,7 @@ module.exports = {
 	devServer: {
 		port: configs.PORT,
 		hot: true,
-		open: true,
+		// open: true,
 		historyApiFallback: true,
 		onListening: () => {
 			console.log(`\n🚀 [\x1b[35mHost App\x1b[0m] running at ${PROTOCOL}://${HOST}:${PORT}\n`);
