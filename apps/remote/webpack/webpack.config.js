@@ -1,13 +1,15 @@
-const { merge } = require("webpack-merge");
-const commonConfig = require('./webpack.common'); 
+import { merge } from 'webpack-merge';
+import commonConfig from './webpack.common.js';
+import devConfig from './webpack.dev.js';
+import prodConfig from './webpack.prod.js';
 
 const MODE = process.env.MODE || 'development';
 
 let envConfig;
 if (MODE === 'development') {
-  envConfig = require('./webpack.dev.js');  
+	envConfig = devConfig;
 } else {
-  envConfig = require('./webpack.prod.js'); 
+	envConfig = prodConfig;
 }
 
-module.exports = merge(commonConfig, envConfig);
+export default merge(commonConfig, envConfig);

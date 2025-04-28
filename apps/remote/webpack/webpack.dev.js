@@ -1,8 +1,14 @@
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
-const deps = require('../package.json').dependencies;
-const webpack = require('webpack');
-const path = require('path');
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import ModuleFederationPlugin from 'webpack/lib/container/ModuleFederationPlugin.js';
+import webpack from 'webpack';
+import path from 'path';
+import { createRequire } from 'module';
+import { getFilePaths } from '../../configs/utils.js';
+
+const packageJSON = createRequire(import.meta.url)('../package.json');
+
+const deps = packageJSON.dependencies;
+const { __dirname } = getFilePaths(import.meta.url);
 
 const configs = {
 	appName: 'remoteApp',
@@ -20,7 +26,7 @@ for (let i = 0; i < REMOTES.length; i++) {
 	remotes[REMOTES[i].split('@')[0]] = REMOTES[i];
 }
 
-module.exports = {
+export default {
 	mode: 'development',
 	devtool: 'cheap-module-source-map',
 	entry: {

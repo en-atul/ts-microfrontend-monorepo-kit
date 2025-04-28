@@ -1,12 +1,15 @@
-const path = require('path');
-const { createBaseWebpackConfig } = require('../../configs/webpack.base');
+import { resolve } from 'path';
+import { createBaseWebpackConfig } from '../../configs/webpack.base.js';
+import { getFilePaths } from '../../configs/utils.js';
 
-const SRC = path.resolve(__dirname, '../src');
-const PUBLIC = path.resolve(__dirname, '../public');
+const { __dirname } = getFilePaths(import.meta.url);
+
+const SRC = resolve(__dirname, '../src');
+const PUBLIC = resolve(__dirname, '../public');
 
 const baseConfig = createBaseWebpackConfig({ srcPath: SRC, publicPath: PUBLIC });
 
-module.exports = {
+export default {
 	...baseConfig,
 	plugins: [...baseConfig.plugins],
 };
