@@ -1,33 +1,75 @@
-import { start } from '../../packages/webpack-config/src/webpack.server.js';
 import { createRequire } from 'module';
+import { start } from '../../packages/webpack-config/src/webpack.server.js';
 
-const packageJSON = createRequire(import.meta.url)('./package.json');
-const deps = packageJSON.dependencies;
+const moduleUrl = import.meta.url;
+const require = createRequire(moduleUrl);
 
-const EXPOSES = ['RemoteComponent_@_RemoteComponent.tsx'];
+const { dependencies: deps } = require('./package.json');
 
-const configs = {
-	development: {
-		appName: 'remoteApp',
-		appFileName: 'remoteEntry.js',
-		PUBLIC_PATH: 'http://localhost:3001/',
-		REMOTES: ['hostApp@http://localhost:3000/remoteEntry.js'],
-		EXPOSES,
+const port = 3001;
+
+// Base configuration
+const baseFederationConfig = {
+	name: 'remoteApp',
+	filename: 'remoteEntry.js',
+	exposes: {
+		'./RemoteComponent': 'RemoteComponent.tsx',
 	},
-	production: {
-		appName: 'remoteApp',
-		appFileName: 'remoteEntry.js',
-		PUBLIC_PATH: 'http://localhost:3001/',
-		REMOTES: ['hostApp@http://localhost:3000/remoteEntry.js'],
-		EXPOSES,
+	shared: {
+		...deps,
+		react: { singleton: true, eager: true, requiredVersion: deps.react },
+		'react-dom': { singleton: true, eager: true, requiredVersion: deps['react-dom'] },
 	},
 };
 
+// Environment-specific settings (overrides for each environment)
+const getEnvironmentConfig = (env) => {
+	switch (env) {
+		case 'development':
+			return {
+				publicPath: `http://localhost:${port}/`,
+				remotes: {},
+				allowedOrigins: ["http://localhost:3000/"],
+			};
+
+		case 'staging':
+			return {
+				publicPath: `http://staging.example.com/`,
+				remotes: {},
+				allowedOrigins: [`http://marketting.staging.example.com/`],
+			};
+
+		case 'production':
+			return {
+				publicPath: `http://production.example.com/`,
+				remotes: {},
+				allowedOrigins: [`http://marketting.production.example.com/`],
+			};
+
+		default:
+			// Fallback to development as default environment
+			return {
+				publicPath: `http://localhost:${port}/`,
+				remotes: {},
+				allowedOrigins: ["http://localhost:3000/"],
+			};
+	}
+};
+
+// Get the specific environment config
+const environmentConfig = getEnvironmentConfig(process.env.NODE_ENV);
+
+// Combine base and environment-specific configs
+const federationConfigs = {
+	...baseFederationConfig,
+	...environmentConfig,
+};
+
+// Start the Webpack server
 export default start({
 	appName: 'Remote App',
-	port: 3001,
-	baseUrl: import.meta.url,
-	configs,
-	deps,
-	allowedOrigins: ['http://localhost:3000/'],
+	baseUrl: moduleUrl,
+	federationConfigs,
+	allowedOrigins: federationConfigs.allowedOrigins,
+	port,
 });

@@ -13,7 +13,7 @@ const createBaseWebpackConfig = ({ srcPath, publicPath, aliases = {} }) => {
 		utils: path.join(ROOT, 'packages/utils/src'),
 	};
 
-	const babelConfigPath = path.join(ROOT, 'babel.config.js');
+	const babelConfigPath = path.join(ROOT, 'packages/babel-config/index.js');
 
 	return {
 		entry: path.join(srcPath, 'index.tsx'),
