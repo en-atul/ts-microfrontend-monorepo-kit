@@ -6,6 +6,7 @@
 	"scripts": {
 		"start:host": "pnpm --filter @repo/host-app start",
 		"start:remote": "pnpm --filter @repo/remote-app start",
+		"dev": "turbo run dev",
 		"format": "prettier --write \"**/*.{ts,tsx,md}\""
 	},
 	"keywords": [
@@ -27,7 +28,8 @@
 		"lerna": "^8.2.2",
 		"lint-staged": "^15.5.1",
 		"prettier": "^3.5.3",
-		"ts-jest": "^29.3.2"
+		"ts-jest": "^29.3.2",
+		"turbo": "2.5.2"
 	},
 	"packageManager": "pnpm@9.0.0",
 	"engines": {

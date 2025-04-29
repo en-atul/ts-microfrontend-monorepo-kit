@@ -6,7 +6,7 @@
 	"private": true,
 	"scripts": {
 		"build": "MODE=production webpack --config webpack.config.js",
-		"start": "MODE=development node webpack.config.js"
+		"dev": "MODE=development node webpack.config.js"
 	},
 	"dependencies": {
 		"@repo/ui": "workspace:*",
