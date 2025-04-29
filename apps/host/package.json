@@ -5,7 +5,7 @@
 	"type": "module",
 	"private": true,
 	"scripts": {
-		"build": "MODE=production webpack --config webpack/webpack.config.js",
+		"build": "MODE=production webpack --config webpack.config.js",
 		"start": "MODE=development node webpack.config.js"
 	},
 	"dependencies": {
@@ -20,6 +20,7 @@
 		"@types/react": "^19.1.2",
 		"@types/react-dom": "^19.1.2",
 		"autoprefixer": "^10.4.21",
+		"babel-loader": "10.0.0",
 		"css-loader": "^7.1.2",
 		"file-loader": "^6.2.0",
 		"postcss": "^8.5.3",
@@ -28,6 +29,7 @@
 		"sass-loader": "^16.0.5",
 		"style-loader": "^4.0.0",
 		"ts-loader": "^9.5.2",
+		"typescript": "5.8.3",
 		"url-loader": "^4.1.1",
 		"webpack-hot-middleware": "^2.26.1"
 	}

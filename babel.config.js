@@ -1,5 +1,5 @@
 module.exports = {
-    babelrcRoots: ['.', './packages/*', './apps/*'],
+    // babelrcRoots: ['.', './packages/*', './apps/*'],
     presets: [
       '@babel/preset-env',
       '@babel/preset-react',

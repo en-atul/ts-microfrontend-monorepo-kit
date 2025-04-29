@@ -4,34 +4,26 @@ import ModuleFederationPlugin from 'webpack/lib/container/ModuleFederationPlugin
 import path from 'path';
 import { getFilePaths } from './utils.js';
 
-export default ({ baseUrl, configs, deps }) => {
+export default ({ baseUrl, configs }) => {
 	const { __dirname } = getFilePaths(baseUrl);
-
 	const SRC = path.join(__dirname, 'src');
 
-	let remotes = {};
-	let exposes = {};
-	let REMOTES = configs.REMOTES;
-	for (let i = 0; i < REMOTES.length; i++) {
-		remotes[REMOTES[i].split('@')[0]] = REMOTES[i];
-	}
+	const createRemoteEntries = (remotes) =>
+		Object.fromEntries(Object.entries(remotes).map(([key, url]) => [key, `${key}@${url}`]));
 
-	let EXPOSES = configs.EXPOSES;
-	for (let i = 0; i < EXPOSES.length; i++) {
-		const [k, v] = EXPOSES[i].split('_@_');
-		exposes[`./${k}`] = path.join(SRC, v);
-	}
+	const createExposeEntries = (exposes) =>
+		Object.fromEntries(
+			Object.entries(exposes).map(([key, relativePath]) => [key, path.join(SRC, relativePath)]),
+		);
 
 	return {
 		mode: 'production',
 		devtool: 'source-map',
-
 		output: {
 			filename: '[name].[contenthash].js',
 			path: __dirname + '/dist',
 			publicPath: '/',
 		},
-
 		module: {
 			rules: [
 				{
@@ -40,26 +32,13 @@ export default ({ baseUrl, configs, deps }) => {
 				},
 			],
 		},
-
 		plugins: [
 			new ModuleFederationPlugin({
-				name: configs.appName,
-				filename: configs.appFileName,
-				exposes,
-				remotes,
-				shared: {
-					...deps,
-					react: {
-						singleton: true,
-						eager: true,
-						requiredVersion: deps.react,
-					},
-					'react-dom': {
-						singleton: true,
-						eager: true,
-						requiredVersion: deps['react-dom'],
-					},
-				},
+				name: configs.name,
+				filename: configs.filename,
+				exposes: createExposeEntries(configs.exposes),
+				remotes: createRemoteEntries(configs.remotes),
+				shared: configs.shared,
 			}),
 			new MiniCssExtractPlugin({ filename: '[name].[contenthash].css' }),
 			new CleanWebpackPlugin(),
