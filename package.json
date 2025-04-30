@@ -7,7 +7,8 @@
 		"start:host": "pnpm --filter @repo/host-app start",
 		"start:remote": "pnpm --filter @repo/remote-app start",
 		"dev": "scripts/workspace-runner.js dev",
-		"format": "prettier --write \"**/*.{ts,tsx,md}\""
+		"format": "prettier --write \"**/*.{ts,tsx,md}\"",
+		"postinstall": "find scripts -type f -exec grep -Il '^#!/usr/bin/env node' {} \\; | xargs chmod +x"
 	},
 	"keywords": [
 		"monorepo",
