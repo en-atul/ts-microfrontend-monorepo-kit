@@ -1,48 +1,140 @@
-import js from "@eslint/js";
-import eslintConfigPrettier from "eslint-config-prettier";
-import tseslint from "typescript-eslint";
-import pluginReactHooks from "eslint-plugin-react-hooks";
-import pluginReact from "eslint-plugin-react";
-import globals from "globals";
-import { config as baseConfig } from "./base.js";
+import tseslint from 'typescript-eslint';
+import pluginReactHooks from 'eslint-plugin-react-hooks';
+import pluginReact from 'eslint-plugin-react';
+import pluginImport from 'eslint-plugin-import';
+import pluginPrettier from 'eslint-plugin-prettier';
+import globals from 'globals';
+import { config as baseConfig } from './base.js';
 
 /**
- * A custom ESLint configuration for libraries that use Next.js.
- *
+ * Custom ESLint config for a React + TypeScript project.
+ * 
  * @type {import("eslint").Linter.Config[]}
- * */
-export const nextJsConfig = [
-  ...baseConfig,
-  js.configs.recommended,
-  eslintConfigPrettier,
-  ...tseslint.configs.recommended,
-  {
-    ...pluginReact.configs.flat.recommended,
-    languageOptions: {
-      ...pluginReact.configs.flat.recommended.languageOptions,
-      globals: {
-        ...globals.serviceworker,
-      },
-    },
-  },
-  // {
-  //   plugins: {
-  //     "@next/next": pluginNext,
-  //   },
-  //   rules: {
-  //     ...pluginNext.configs.recommended.rules,
-  //     ...pluginNext.configs["core-web-vitals"].rules,
-  //   },
-  // },
-  {
-    plugins: {
-      "react-hooks": pluginReactHooks,
-    },
-    settings: { react: { version: "detect" } },
-    rules: {
-      ...pluginReactHooks.configs.recommended.rules,
-      // React scope no longer necessary with new JSX transform.
-      "react/react-in-jsx-scope": "off",
-    },
-  },
+ */
+export const reactJsConfig = [
+	...baseConfig,
+	{
+		files: ['**/*.ts', '**/*.tsx'],
+		languageOptions: {
+			parser: tseslint.parser,
+			parserOptions: {
+				ecmaVersion: 2020,
+				sourceType: 'module',
+			},
+		},
+		plugins: {
+			'@typescript-eslint': tseslint.plugin,
+			import: pluginImport,
+			prettier: pluginPrettier,
+		},
+		rules: {
+			'@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+			'@typescript-eslint/consistent-type-assertions': 'warn',
+			// '@typescript-eslint/type-annotation-spacing': 'warn',
+			'@typescript-eslint/no-explicit-any': 'error',
+			'@typescript-eslint/no-inferrable-types': 'warn',
+			'@typescript-eslint/no-non-null-assertion': 'error',
+
+			'no-console': ['warn', { allow: ['warn', 'error'] }],
+			'no-debugger': 'error',
+			'consistent-return': 'error',
+			eqeqeq: ['error', 'always'],
+			'no-throw-literal': 'error',
+			'no-implicit-coercion': 'error',
+			'import/default': 'error',
+			'import/no-cycle': ['error', { maxDepth: Infinity }],
+			'import/no-unresolved': 'error',
+			'import/order': [
+				'warn',
+				{
+					'newlines-between': 'always',
+					alphabetize: {
+						order: 'asc',
+					},
+				},
+			],
+			quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: false }],
+			'prettier/prettier': 'error',
+
+			semi: ['warn', 'always'],
+			'no-nested-ternary': 'warn',
+			'no-implicit-globals': 'warn',
+			curly: ['warn', 'all'],
+			'prefer-arrow-callback': 'warn',
+			complexity: ['warn', { max: 10 }],
+
+			'@typescript-eslint/naming-convention': [
+				'warn',
+				{
+					selector: 'variable',
+					format: ['camelCase', 'PascalCase'],
+					leadingUnderscore: 'allow',
+				},
+				{
+					selector: 'typeLike',
+					format: ['PascalCase'],
+				},
+				{
+					selector: 'enum',
+					format: ['UPPER_CASE'],
+				},
+				{
+					selector: 'enumMember',
+					format: ['UPPER_CASE'],
+				},
+				{
+					selector: 'function',
+					format: ['camelCase'],
+				},
+				{
+					selector: 'parameter',
+					format: ['camelCase'],
+					leadingUnderscore: 'allow',
+				},
+				{
+					selector: 'property',
+					format: null,
+					leadingUnderscore: 'allow',
+				},
+			],
+		},
+	},
+
+	{
+		files: ['**/*.js'],
+		languageOptions: {
+			globals: globals.browser,
+		},
+		rules: {
+			'no-undef': 'off',
+		},
+	},
+
+	{
+		files: ['*.spec.ts', '*.spec.tsx', '*.test.ts', '*.test.tsx'],
+		rules: {
+			'@typescript-eslint/no-explicit-any': 'off',
+		},
+	},
+
+	{
+		...pluginReact.configs.flat.recommended,
+		languageOptions: {
+			...pluginReact.configs.flat.recommended.languageOptions,
+			globals: {
+				...globals.serviceworker,
+			},
+		},
+	},
+
+	{
+		plugins: {
+			'react-hooks': pluginReactHooks,
+		},
+		settings: { react: { version: 'detect' } },
+		rules: {
+			...pluginReactHooks.configs.recommended.rules,
+			'react/react-in-jsx-scope': 'off',
+		},
+	},
 ];

@@ -1,4 +1,4 @@
-declare module "remoteApp/RemoteComponent" {
-  const RemoteComponent: React.ComponentType<any>;
-  export default RemoteComponent;
+declare module 'remoteApp/RemoteComponent' {
+	const RemoteComponent: React.ComponentType;
+	export default RemoteComponent;
 }
