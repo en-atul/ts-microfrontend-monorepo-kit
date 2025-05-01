@@ -4,18 +4,20 @@ import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import { getConfig } from './webpack.config.js';
+import { getFilePaths } from './utils.js';
 
-const start = ({ appName, port, allowedOrigins, ...rest }) => {
+const start = ({ mode, appName, port, allowedOrigins, ...rest }) => {
+	const { __dirname } = getFilePaths(rest.baseUrl);
+
 	const webpackConfig = getConfig(rest);
 	const app = express();
 	const compiler = webpack(webpackConfig);
 
 	const HOST = process.env.HOST || 'localhost';
 	const PORT = process.env.PORT || port;
-	const PROTOCOL =
-		process.env.PROTOCOL || (process.env.NODE_ENV === 'production' ? 'https' : 'http');
+	const PROTOCOL = process.env.PROTOCOL || 'http';
 
-	const isDevelopment = process.env.MODE === 'development';
+	const isDevelopment = mode === 'development';
 
 	app.use('/remoteEntry.js', (req, res, next) => {
 		const referer = req.get('origin') || req.get('referer');

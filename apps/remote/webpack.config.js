@@ -1,5 +1,7 @@
 import { createRequire } from 'module';
 import { start } from '../../packages/webpack-config/src/webpack.server.js';
+import { getConfig } from '../../packages/webpack-config/src/webpack.config.js';
+import { parseArgs } from '../../packages/webpack-config/src/utils.js';
 
 const moduleUrl = import.meta.url;
 const require = createRequire(moduleUrl);
@@ -7,6 +9,9 @@ const require = createRequire(moduleUrl);
 const { dependencies: deps } = require('./package.json');
 
 const port = 3001;
+
+const args = parseArgs(process.argv.slice(2));
+const mode = args.mode || 'development';
 
 // Base configuration
 const baseFederationConfig = {
@@ -65,11 +70,24 @@ const federationConfigs = {
 	...environmentConfig,
 };
 
-// Start the Webpack server
-export default start({
-	appName: 'Remote App',
-	baseUrl: moduleUrl,
-	federationConfigs,
-	allowedOrigins: federationConfigs.allowedOrigins,
-	port,
-});
+let config;
+
+if ((args.serve === 'true' && mode === 'production') || mode === 'development') {
+	// Start the Webpack server
+	config = start({
+		appName: 'Remote App',
+		baseUrl: moduleUrl,
+		federationConfigs,
+		allowedOrigins: federationConfigs.allowedOrigins,
+		port,
+		mode,
+	});
+} else {
+	config = getConfig({
+		baseUrl: moduleUrl,
+		federationConfigs,
+		mode,
+	});
+}
+
+export default config;

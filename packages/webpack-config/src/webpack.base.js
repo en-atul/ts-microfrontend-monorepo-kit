@@ -1,11 +1,13 @@
 import path from 'path';
+import fs from 'fs';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
 import { getFilePaths } from './utils.js';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const { __dirname } = getFilePaths(import.meta.url);
 
-const createBaseWebpackConfig = ({ srcPath, publicPath, aliases = {} }) => {
+const createBaseWebpackConfig = ({ rootPath, srcPath, publicPath, aliases = {}, mode }) => {
 	const ROOT = path.resolve(__dirname, '../../../');
 
 	const PACKAGES = {
@@ -14,6 +16,14 @@ const createBaseWebpackConfig = ({ srcPath, publicPath, aliases = {} }) => {
 	};
 
 	const babelConfigPath = path.join(ROOT, 'packages/babel-config/index.js');
+
+	// Load environment variables
+	const nodeEnv = process.env.NODE_ENV || 'development';
+	const envPath = `.env.${nodeEnv}`;
+	const dotenvPath = path.resolve(rootPath, envPath);
+	const fallbackDotenvPath = path.resolve(rootPath, '.env');
+
+	const styleLoader = mode === 'production' ? MiniCssExtractPlugin.loader : 'style-loader';
 
 	return {
 		entry: path.join(srcPath, 'index.tsx'),
@@ -45,10 +55,16 @@ const createBaseWebpackConfig = ({ srcPath, publicPath, aliases = {} }) => {
 				{
 					test: /\.module\.scss$/,
 					use: [
-						'style-loader',
+						styleLoader,
 						{
 							loader: 'css-loader',
-							options: { modules: true, importLoaders: 1 },
+							options: {
+								modules: {
+									localIdentName:
+										mode === 'production' ? '[hash:base64:5]' : '[local]__[hash:base64:5]',
+								},
+								importLoaders: 1,
+							},
 						},
 						'sass-loader',
 					],
@@ -57,7 +73,7 @@ const createBaseWebpackConfig = ({ srcPath, publicPath, aliases = {} }) => {
 					test: /\.s[ac]ss$/i,
 					exclude: /\.module\.(scss|sass)$/,
 					use: [
-						'style-loader',
+						styleLoader,
 						{
 							loader: 'css-loader',
 							options: { importLoaders: 1 },
@@ -80,7 +96,9 @@ const createBaseWebpackConfig = ({ srcPath, publicPath, aliases = {} }) => {
 			new HtmlWebpackPlugin({
 				template: path.join(publicPath, 'index.html'),
 			}),
-			new Dotenv(),
+			new Dotenv({
+				path: fs.existsSync(dotenvPath) ? dotenvPath : fallbackDotenvPath,
+			}),
 		],
 	};
 };

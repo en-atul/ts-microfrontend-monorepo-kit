@@ -1,7 +1,7 @@
+import path from 'path';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import ModuleFederationPlugin from 'webpack/lib/container/ModuleFederationPlugin.js';
-import path from 'path';
 import { getFilePaths } from './utils.js';
 
 export default ({ baseUrl, configs }) => {
@@ -23,14 +23,6 @@ export default ({ baseUrl, configs }) => {
 			filename: '[name].[contenthash].js',
 			path: __dirname + '/dist',
 			publicPath: '/',
-		},
-		module: {
-			rules: [
-				{
-					test: /\.s?css$/,
-					use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
-				},
-			],
 		},
 		plugins: [
 			new ModuleFederationPlugin({
