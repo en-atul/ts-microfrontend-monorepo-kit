@@ -3,16 +3,14 @@ import { getCommonConfig } from './webpack.common.js';
 import devConfig from './webpack.dev.js';
 import prodConfig from './webpack.prod.js';
 
-const MODE = process.env.MODE?.trim() || 'development';
-
 const envConfigMap = {
 	development: devConfig,
 	production: prodConfig,
 };
 
-export const getConfig = ({ baseUrl, aliases, federationConfigs }) => {
-	const getEnvConfig = envConfigMap[MODE] || devConfig;
-	const commonConfig = getCommonConfig({ baseUrl, aliases });
+export const getConfig = ({ mode, baseUrl, aliases, federationConfigs }) => {
+	const getEnvConfig = envConfigMap[mode] || devConfig;
+	const commonConfig = getCommonConfig({ mode, baseUrl, aliases });
 	const envSpecificConfig = getEnvConfig({ baseUrl, configs: federationConfigs });
 
 	return merge(commonConfig, envSpecificConfig);
