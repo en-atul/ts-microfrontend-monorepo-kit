@@ -15,6 +15,7 @@
 		"react-dom": "^19.1.0"
 	},
 	"devDependencies": {
+		"@repo/babel-config": "workspace:*",
 		"@repo/eslint-config": "workspace:*",
 		"@repo/typescript-config": "workspace:*",
 		"@types/react": "^19.1.2",
@@ -22,6 +23,7 @@
 		"autoprefixer": "^10.4.21",
 		"babel-loader": "10.0.0",
 		"css-loader": "^7.1.2",
+		"eslint": "^9.25.0",
 		"file-loader": "^6.2.0",
 		"postcss": "^8.5.3",
 		"postcss-loader": "^8.1.1",
