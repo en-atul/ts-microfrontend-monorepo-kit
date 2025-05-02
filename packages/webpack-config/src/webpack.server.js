@@ -29,6 +29,10 @@ const start = ({ mode, appName, port, allowedOrigins, ...rest }) => {
 		res.status(403).send('Forbidden: Referer not allowed');
 	});
 
+	app.get('/health', (req, res) => {
+		res.send('OK');
+	});
+
 	if (isDevelopment) {
 		// Webpack middlewares
 		app.use(
@@ -44,7 +48,7 @@ const start = ({ mode, appName, port, allowedOrigins, ...rest }) => {
 	}
 
 	// Handle everything else
-	app.get('/', (req, res) => {
+	app.get('*', (req, res) => {
 		const filePath = isDevelopment
 			? path.join(compiler.outputPath, 'index.html')
 			: path.resolve(__dirname, 'dist', 'index.html');

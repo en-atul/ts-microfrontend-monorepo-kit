@@ -51,9 +51,9 @@ const getEnvironmentConfig = (env) => {
 
 		case 'production':
 			return {
-				publicPath: `http://production.example.com/`,
+				publicPath: `http://localhost:${port}/`,
 				remotes: {
-					remoteApp: `http://production.example.com/remoteEntry.js`,
+					remoteApp: 'http://localhost:3001/remoteEntry.js',
 				},
 				allowedOrigins: [],
 			};

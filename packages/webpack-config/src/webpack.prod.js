@@ -22,7 +22,7 @@ export default ({ baseUrl, configs }) => {
 		output: {
 			filename: '[name].[contenthash].js',
 			path: __dirname + '/dist',
-			publicPath: '/',
+			publicPath: configs.publicPath,
 		},
 		plugins: [
 			new ModuleFederationPlugin({

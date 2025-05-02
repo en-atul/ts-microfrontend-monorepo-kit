@@ -13,6 +13,9 @@ const port = 3001;
 const args = parseArgs(process.argv.slice(2));
 const mode = args.mode || 'development';
 
+const isBuildServing = args.serve === 'true';
+const isDevServing = mode === 'development';
+
 // Base configuration
 const baseFederationConfig = {
 	name: 'remoteApp',
@@ -34,7 +37,7 @@ const getEnvironmentConfig = (env) => {
 			return {
 				publicPath: `http://localhost:${port}/`,
 				remotes: {},
-				allowedOrigins: ["http://localhost:3000/"],
+				allowedOrigins: ['http://localhost:3000/'],
 			};
 
 		case 'staging':
@@ -46,9 +49,9 @@ const getEnvironmentConfig = (env) => {
 
 		case 'production':
 			return {
-				publicPath: `http://production.example.com/`,
+				publicPath: `http://localhost:${port}/`,
 				remotes: {},
-				allowedOrigins: [`http://marketting.production.example.com/`],
+				allowedOrigins: ['http://localhost:3000/'],
 			};
 
 		default:
@@ -56,7 +59,7 @@ const getEnvironmentConfig = (env) => {
 			return {
 				publicPath: `http://localhost:${port}/`,
 				remotes: {},
-				allowedOrigins: ["http://localhost:3000/"],
+				allowedOrigins: ['http://localhost:3000/'],
 			};
 	}
 };
@@ -72,7 +75,7 @@ const federationConfigs = {
 
 let config;
 
-if ((args.serve === 'true' && mode === 'production') || mode === 'development') {
+if (isBuildServing || isDevServing) {
 	// Start the Webpack server
 	config = start({
 		appName: 'Remote App',
