@@ -1,8 +1,8 @@
-import { createRequire } from 'module';
-import { start } from '../../packages/webpack-config/src/webpack.server.js';
-import { getConfig } from '../../packages/webpack-config/src/webpack.config.js';
-import { parseArgs } from '../../packages/webpack-config/src/utils.js';
 import chalk from 'chalk';
+import { createRequire } from 'module';
+import { start } from '@repo/webpack-config/server';
+import { getConfig } from '@repo/webpack-config/config';
+import { parseArgs } from '@repo/webpack-config/utils';
 
 const moduleUrl = import.meta.url;
 const require = createRequire(moduleUrl);

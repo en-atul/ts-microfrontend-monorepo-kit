@@ -3,6 +3,11 @@
 	"version": "1.0.0",
 	"private": true,
 	"type": "module",
+	"exports": {
+		"./server": "./src/webpack.server.js",
+		"./config": "./src/webpack.config.js",
+		"./utils": "./src/utils.js"
+	},
 	"devDependencies": {
 		"@pmmmwh/react-refresh-webpack-plugin": "^0.5.16",
 		"@svgr/webpack": "^8.1.0",

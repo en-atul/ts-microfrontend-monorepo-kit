@@ -1,9 +1,12 @@
-# 🚀 Microfrontend Monorepo — Webpack 5 + Module Federation + React + TypeScript
+# 🚀 Microfrontend Monorepo — Webpack 5 + Babel + Module Federation + React + TypeScript
+
+![Banner](screenshots/banner.png)
 
 > In Progress
 
 A full-featured monorepo boilerplate for building scalable **microfrontend** applications using
-**Webpack Module Federation**, **React**, **TypeScript**, and support for **CSS/SCSS Modules**.  
+**Webpack**, **Module Federation**, **Babel**, **React**, **TypeScript**, and support for **CSS/SCSS
+Modules**.  
 Includes secure Express middleware to protect remote module access based on allowed origins.
 
 ---

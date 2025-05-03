@@ -1,8 +1,8 @@
-import { createRequire } from 'module';
-import { start } from '../../packages/webpack-config/src/webpack.server.js';
-import { getConfig } from '../../packages/webpack-config/src/webpack.config.js';
-import { parseArgs } from '../../packages/webpack-config/src/utils.js';
 import chalk from 'chalk';
+import { createRequire } from 'module';
+import { start } from '@repo/webpack-config/server';
+import { getConfig } from '@repo/webpack-config/config';
+import { parseArgs } from '@repo/webpack-config/utils';
 
 const moduleUrl = import.meta.url;
 const require = createRequire(moduleUrl);
@@ -13,6 +13,9 @@ const port = 3000;
 
 const args = parseArgs(process.argv.slice(2));
 const mode = args.mode || 'development';
+
+const isBuildServing = args.serve === 'true';
+const isDevServing = mode === 'development';
 
 // Base configuration
 const baseFederationConfig = {
@@ -80,7 +83,7 @@ const federationConfigs = {
 let config;
 
 // Serve the local build using the Webpack server or run in development mode
-if ((args.serve === 'true' && mode === 'production') || mode === 'development') {
+if (isBuildServing || isDevServing) {
 	// Start the Webpack server
 	config = start({
 		appName: 'Host App',
