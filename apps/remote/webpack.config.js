@@ -2,6 +2,7 @@ import { createRequire } from 'module';
 import { start } from '../../packages/webpack-config/src/webpack.server.js';
 import { getConfig } from '../../packages/webpack-config/src/webpack.config.js';
 import { parseArgs } from '../../packages/webpack-config/src/utils.js';
+import chalk from 'chalk';
 
 const moduleUrl = import.meta.url;
 const require = createRequire(moduleUrl);
@@ -75,6 +76,7 @@ const federationConfigs = {
 
 let config;
 
+// Serve the local build using the Webpack server or run in development mode
 if (isBuildServing || isDevServing) {
 	// Start the Webpack server
 	config = start({
@@ -86,6 +88,8 @@ if (isBuildServing || isDevServing) {
 		mode,
 	});
 } else {
+	console.log(chalk.grey(`[Build]: ${chalk.magenta(mode)}`));
+
 	config = getConfig({
 		baseUrl: moduleUrl,
 		federationConfigs,

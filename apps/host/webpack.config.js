@@ -14,8 +14,6 @@ const port = 3000;
 const args = parseArgs(process.argv.slice(2));
 const mode = args.mode || 'development';
 
-console.log(chalk.grey(`[Build]: ${chalk.magenta(mode)}`));
-
 // Base configuration
 const baseFederationConfig = {
 	name: 'hostApp',
@@ -81,6 +79,7 @@ const federationConfigs = {
 
 let config;
 
+// Serve the local build using the Webpack server or run in development mode
 if ((args.serve === 'true' && mode === 'production') || mode === 'development') {
 	// Start the Webpack server
 	config = start({
@@ -92,6 +91,8 @@ if ((args.serve === 'true' && mode === 'production') || mode === 'development') 
 		mode,
 	});
 } else {
+	console.log(chalk.grey(`[Build]: ${chalk.magenta(mode)}`));
+
 	config = getConfig({
 		baseUrl: moduleUrl,
 		federationConfigs,
