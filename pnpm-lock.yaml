@@ -66,6 +66,9 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
+      '@repo/webpack-config':
+        specifier: workspace:*
+        version: link:../../packages/webpack-config
       '@types/react':
         specifier: ^19.1.2
         version: 19.1.2
@@ -133,6 +136,9 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
+      '@repo/webpack-config':
+        specifier: workspace:*
+        version: link:../../packages/webpack-config
       '@types/react':
         specifier: ^19.1.2
         version: 19.1.2

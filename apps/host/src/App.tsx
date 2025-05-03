@@ -10,7 +10,7 @@ const App: React.FC = () => {
 		toCall();
 	}, []);
 
-	const TITLE = '🚀 MF: Host App!';
+	const TITLE = '🚀 Host App!';
 
 	return (
 		<div>
