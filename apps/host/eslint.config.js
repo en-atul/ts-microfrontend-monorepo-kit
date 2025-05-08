@@ -1,28 +1,17 @@
 import { reactJsConfig } from '@repo/eslint-config/react-js';
+import path from 'path';
 
 /** @type {import("eslint").Linter.Config[]} */
 export default [
 	...reactJsConfig,
-	// {
-	// 	rules: {
-	// 		'import/no-unresolved': [
-	// 			'error',
-	// 			{
-	// 				ignore: ['remoteApp'],
-	// 			},
-	// 		],
-	// 	},
-	// },
 	{
 		settings: {
 			'import/resolver': {
-				node: {
-					extensions: ['.js', '.jsx', '.ts', '.tsx'],
-				},
 				typescript: {
-					project: './tsconfig.json',
+					project: path.resolve(__dirname, './tsconfig.json'),
 				},
 			},
 		},
+		ignores: ['dist/**'],
 	},
 ];
