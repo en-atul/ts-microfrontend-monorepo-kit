@@ -6,11 +6,7 @@ import pluginPrettier from 'eslint-plugin-prettier';
 import globals from 'globals';
 import { config as baseConfig } from './base.js';
 
-/**
- * Custom ESLint config for a React + TypeScript project.
- * 
- * @type {import("eslint").Linter.Config[]}
- */
+/** @type {import("eslint").Linter.Config[]} */
 export const reactJsConfig = [
 	...baseConfig,
 	{
@@ -30,39 +26,9 @@ export const reactJsConfig = [
 		rules: {
 			'@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
 			'@typescript-eslint/consistent-type-assertions': 'warn',
-			// '@typescript-eslint/type-annotation-spacing': 'warn',
 			'@typescript-eslint/no-explicit-any': 'error',
 			'@typescript-eslint/no-inferrable-types': 'warn',
 			'@typescript-eslint/no-non-null-assertion': 'error',
-
-			'no-console': ['warn', { allow: ['warn', 'error'] }],
-			'no-debugger': 'error',
-			'consistent-return': 'error',
-			eqeqeq: ['error', 'always'],
-			'no-throw-literal': 'error',
-			'no-implicit-coercion': 'error',
-			'import/default': 'error',
-			'import/no-cycle': ['error', { maxDepth: Infinity }],
-			'import/no-unresolved': 'error',
-			'import/order': [
-				'warn',
-				{
-					'newlines-between': 'always',
-					alphabetize: {
-						order: 'asc',
-					},
-				},
-			],
-			quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: false }],
-			'prettier/prettier': 'error',
-
-			semi: ['warn', 'always'],
-			'no-nested-ternary': 'warn',
-			'no-implicit-globals': 'warn',
-			curly: ['warn', 'all'],
-			'prefer-arrow-callback': 'warn',
-			complexity: ['warn', { max: 10 }],
-
 			'@typescript-eslint/naming-convention': [
 				'warn',
 				{
@@ -97,9 +63,34 @@ export const reactJsConfig = [
 					leadingUnderscore: 'allow',
 				},
 			],
+			'no-console': ['warn', { allow: ['warn', 'error'] }],
+			'no-debugger': 'error',
+			'consistent-return': 'error',
+			'eqeqeq': ['error', 'always'],
+			'no-throw-literal': 'error',
+			'no-implicit-coercion': 'error',
+			'import/default': 'error',
+			'import/no-cycle': ['error', { maxDepth: Infinity }],
+			'import/no-unresolved': 'error',
+			'import/order': [
+				'warn',
+				{
+					'newlines-between': 'always',
+					alphabetize: {
+						order: 'asc',
+					},
+				},
+			],
+			'quotes': ['error', 'single', { avoidEscape: true, allowTemplateLiterals: false }],
+			'prettier/prettier': 'error',
+			'semi': ['warn', 'always'],
+			'no-nested-ternary': 'warn',
+			'no-implicit-globals': 'warn',
+			'curly': ['warn', 'all'],
+			'prefer-arrow-callback': 'warn',
+			'complexity': ['warn', { max: 10 }],
 		},
 	},
-
 	{
 		files: ['**/*.js'],
 		languageOptions: {
@@ -109,14 +100,12 @@ export const reactJsConfig = [
 			'no-undef': 'off',
 		},
 	},
-
 	{
 		files: ['*.spec.ts', '*.spec.tsx', '*.test.ts', '*.test.tsx'],
 		rules: {
 			'@typescript-eslint/no-explicit-any': 'off',
 		},
 	},
-
 	{
 		...pluginReact.configs.flat.recommended,
 		languageOptions: {
@@ -126,7 +115,6 @@ export const reactJsConfig = [
 			},
 		},
 	},
-
 	{
 		plugins: {
 			'react-hooks': pluginReactHooks,
