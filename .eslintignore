@@ -4,4 +4,4 @@ node_modules/
 jest.config.js
 jest.setup.js
 __mocks__
-.eslintrc.js
+# eslint.config.js

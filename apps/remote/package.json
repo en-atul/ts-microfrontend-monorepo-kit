@@ -12,6 +12,7 @@
 	},
 	"dependencies": {
 		"@repo/ui": "workspace:*",
+		"framer-motion": "12.10.1",
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0"
 	},
@@ -19,6 +20,7 @@
 		"@repo/eslint-config": "workspace:*",
 		"@repo/typescript-config": "workspace:*",
 		"@repo/webpack-config": "workspace:*",
+		"@types/node": "^22.14.0",
 		"@types/react": "^19.1.2",
 		"@types/react-dom": "^19.1.2",
 		"autoprefixer": "^10.4.21",

@@ -7,6 +7,6 @@ module.exports = function (api) {
 			['@babel/preset-react', { runtime: 'automatic' }],
 			'@babel/preset-typescript',
 		],
-		plugins: [isDevelopment && 'react-refresh/babel'].filter(Boolean), // removes `false` if not in development
+		plugins: [isDevelopment && 'react-refresh/babel'].filter(Boolean),
 	};
 };

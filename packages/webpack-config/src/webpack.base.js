@@ -29,7 +29,7 @@ const createBaseWebpackConfig = ({ rootPath, srcPath, publicPath, aliases = {}, 
 		entry: path.join(srcPath, 'index.tsx'),
 
 		resolve: {
-			extensions: ['.tsx', '.ts', '.js', '.scss'],
+			extensions: ['.tsx', '.ts', '.js', '.scss', '.css'],
 			alias: {
 				'@': srcPath,
 				'@repo/ui': PACKAGES.ui,
@@ -79,6 +79,18 @@ const createBaseWebpackConfig = ({ rootPath, srcPath, publicPath, aliases = {}, 
 							options: { importLoaders: 1 },
 						},
 						'sass-loader',
+					],
+				},
+				{
+					test: /\.css$/,
+					use: [
+						styleLoader,
+						{
+							loader: 'css-loader',
+							options: {
+								importLoaders: 1,
+							},
+						},
 					],
 				},
 				{
