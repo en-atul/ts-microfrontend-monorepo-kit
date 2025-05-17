@@ -9,6 +9,7 @@
 	},
 	"scripts": {
 		"build": "tsc -b",
+		"watch": "cd ../.. && pnpm gulp watch",
 		"lint": "eslint .",
 		"postpack": "rm -f oclif.manifest.json",
 		"prepack": "rm -rf dist && tsc -b && oclif manifest && oclif readme",
@@ -23,10 +24,15 @@
 	"author": "atul",
 	"license": "MIT",
 	"devDependencies": {
-		"@oclif/core": "^4.3.0",
+		"@oclif/core": "^3.19.2",
 		"@types/node": "^22.15.18",
-		"typescript": "^5.8.3",
-		"ts-node": "^10.9.2"
+		"@types/ora": "3.2.0",
+		"glob": "^10.3.10",
+		"ora": "^5.4.1",
+		"picocolors": "^1.0.0",
+		"ts-node": "^10.9.2",
+		"tslib": "2.8.1",
+		"typescript": "^5.8.3"
 	},
 	"files": [
 		"/bin",

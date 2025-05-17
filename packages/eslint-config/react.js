@@ -6,7 +6,7 @@ import pluginPrettier from 'eslint-plugin-prettier';
 import globals from 'globals';
 import { config as baseConfig } from './base.js';
 
-/** @type {import("eslint").Linter.Config[]} */
+/** @type {import("eslint").Linter.FlatConfig[]} */
 export const reactJsConfig = [
 	...baseConfig,
 	{
@@ -16,6 +16,9 @@ export const reactJsConfig = [
 			parserOptions: {
 				ecmaVersion: 2020,
 				sourceType: 'module',
+			},
+			globals: {
+				...globals.browser,
 			},
 		},
 		plugins: {
@@ -105,7 +108,9 @@ export const reactJsConfig = [
 	{
 		files: ['**/*.js'],
 		languageOptions: {
-			globals: globals.browser,
+			globals: {
+				...globals.browser,
+			},
 		},
 		rules: {
 			'no-undef': 'off',
@@ -118,20 +123,16 @@ export const reactJsConfig = [
 		},
 	},
 	{
-		...pluginReact.configs.flat.recommended,
-		languageOptions: {
-			...pluginReact.configs.flat.recommended.languageOptions,
-			globals: {
-				...globals.serviceworker,
-			},
-		},
-	},
-	{
+		files: ['**/*.{ts,tsx,js,jsx}'],
 		plugins: {
+			react: pluginReact,
 			'react-hooks': pluginReactHooks,
 		},
-		settings: { react: { version: 'detect' } },
+		settings: {
+			react: { version: 'detect' },
+		},
 		rules: {
+			...pluginReact.configs.recommended.rules,
 			...pluginReactHooks.configs.recommended.rules,
 			'react/react-in-jsx-scope': 'off',
 		},
