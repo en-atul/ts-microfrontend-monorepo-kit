@@ -13,9 +13,13 @@ export default [
       'import/resolver': {
         typescript: {
           project: path.resolve(__dirname, './tsconfig.json'),
+          alwaysTryTypes: true,
         },
-      },
+        node: {
+          extensions: ['.js', '.jsx', '.ts', '.tsx']
+        }
+      }
     },
-    ignores: ['dist/**'],
-  },
+    ignores: ['dist/**']
+  }
 ];

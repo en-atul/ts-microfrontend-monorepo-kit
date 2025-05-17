@@ -24,6 +24,7 @@
 	"author": "atul",
 	"license": "MIT",
 	"devDependencies": {
+		"@repo/dev-cli": "workspace:*",
 		"@types/jest": "^29.5.14",
 		"blessed": "0.1.81",
 		"chalk": "4.1.2",
