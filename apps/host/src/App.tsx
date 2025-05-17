@@ -10,11 +10,9 @@ const App: React.FC = () => {
 		toCall();
 	}, []);
 
-	const TITLE = '🚀 Host App!';
-
 	return (
 		<div>
-			<h1>{TITLE}</h1>
+			<h1>🚀 Host App!</h1>
 			<ErrorBoundary message="Failed to load Remote component. Please try again later.">
 				<Suspense fallback={<div>Loading Remote Component...</div>}>
 					<RemoteComponent />

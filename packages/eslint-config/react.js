@@ -6,7 +6,7 @@ import pluginPrettier from 'eslint-plugin-prettier';
 import globals from 'globals';
 import { config as baseConfig } from './base.js';
 
-/** @type {import("eslint").Linter.Config[]} */
+/** @type {import("eslint").Linter.FlatConfig[]} */
 export const reactJsConfig = [
 	...baseConfig,
 	{
@@ -16,6 +16,9 @@ export const reactJsConfig = [
 			parserOptions: {
 				ecmaVersion: 2020,
 				sourceType: 'module',
+			},
+			globals: {
+				...globals.browser,
 			},
 		},
 		plugins: {
@@ -62,11 +65,22 @@ export const reactJsConfig = [
 					format: null,
 					leadingUnderscore: 'allow',
 				},
+				{
+					selector: 'typeParameter',
+					format: ['PascalCase'],
+					prefix: ['T', 'K'],
+				},
+				{
+					selector: ['memberLike', 'variableLike'],
+					types: ['boolean'],
+					format: ['PascalCase'],
+					prefix: ['can', 'did', 'has', 'is', 'must', 'needs', 'should', 'will'],
+				},
 			],
 			'no-console': ['warn', { allow: ['warn', 'error'] }],
 			'no-debugger': 'error',
 			'consistent-return': 'error',
-			'eqeqeq': ['error', 'always'],
+			eqeqeq: ['error', 'always'],
 			'no-throw-literal': 'error',
 			'no-implicit-coercion': 'error',
 			'import/default': 'error',
@@ -81,20 +95,22 @@ export const reactJsConfig = [
 					},
 				},
 			],
-			'quotes': ['error', 'single', { avoidEscape: true, allowTemplateLiterals: false }],
+			quotes: ['error', 'single', { avoidEscape: true, allowTemplateLiterals: false }],
 			'prettier/prettier': 'error',
-			'semi': ['warn', 'always'],
+			semi: ['warn', 'always'],
 			'no-nested-ternary': 'warn',
 			'no-implicit-globals': 'warn',
-			'curly': ['warn', 'all'],
+			curly: ['warn', 'all'],
 			'prefer-arrow-callback': 'warn',
-			'complexity': ['warn', { max: 10 }],
+			complexity: ['warn', { max: 10 }],
 		},
 	},
 	{
 		files: ['**/*.js'],
 		languageOptions: {
-			globals: globals.browser,
+			globals: {
+				...globals.browser,
+			},
 		},
 		rules: {
 			'no-undef': 'off',
@@ -107,20 +123,16 @@ export const reactJsConfig = [
 		},
 	},
 	{
-		...pluginReact.configs.flat.recommended,
-		languageOptions: {
-			...pluginReact.configs.flat.recommended.languageOptions,
-			globals: {
-				...globals.serviceworker,
-			},
-		},
-	},
-	{
+		files: ['**/*.{ts,tsx,js,jsx}'],
 		plugins: {
+			react: pluginReact,
 			'react-hooks': pluginReactHooks,
 		},
-		settings: { react: { version: 'detect' } },
+		settings: {
+			react: { version: 'detect' },
+		},
 		rules: {
+			...pluginReact.configs.recommended.rules,
 			...pluginReactHooks.configs.recommended.rules,
 			'react/react-in-jsx-scope': 'off',
 		},
