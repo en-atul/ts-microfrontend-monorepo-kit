@@ -35,10 +35,20 @@ export default class Lint extends Command {
 		}),
 	};
 
-	private getFileCount = async (pattern: string): Promise<number> => {
+	private async getFileCount(pattern: string, stagedOnly: boolean): Promise<number> {
+		if (stagedOnly) {
+			const stagedFiles = await this.getStagedFiles(pattern);
+			return stagedFiles.length;
+		}
 		const files = await glob(pattern, { ignore: ['**/node_modules/**', '**/dist/**'] });
 		return files.length;
-	};
+	}
+
+	private async getFileCounts(stagedOnly: boolean): Promise<{ tsFiles: number; mdFiles: number }> {
+		const tsFiles = await this.getFileCount('\.(ts|tsx)$', stagedOnly);
+		const mdFiles = await this.getFileCount('\.md$', stagedOnly);
+		return { tsFiles, mdFiles };
+	}
 
 	private formatTime = (ms: number): string => {
 		return ms < 1000 ? `${ms}ms` : `${(ms / 1000).toFixed(2)}s`;
@@ -243,8 +253,7 @@ export default class Lint extends Command {
 			this.printHeader(flags.fix, stagedOnly);
 
 			// Count files
-			const tsFiles = await this.getFileCount('**/*.{ts,tsx}');
-			const mdFiles = await this.getFileCount('**/*.md');
+			const { tsFiles, mdFiles } = await this.getFileCounts(stagedOnly);
 			this.printFileCount(tsFiles, mdFiles);
 
 			// Spacer before tasks
