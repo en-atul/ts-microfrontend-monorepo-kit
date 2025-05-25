@@ -1,197 +1,207 @@
-# 🚀 Microfrontend Monorepo — Webpack 5 + Babel + Module Federation + React + TypeScript
+# 🚀 TypeScript Microfrontend Monorepo Kit
 
 ![Banner](screenshots/banner.png)
 
-> In Progress
+A production-ready monorepo boilerplate for building scalable microfrontend applications, powered by
+modern web technologies and best practices.
 
-A full-featured monorepo boilerplate for building scalable **microfrontend** applications using
-**Webpack**, **Module Federation**, **Babel**, **React**, **TypeScript**, and support for **CSS/SCSS
-Modules**.  
-Includes secure Express middleware to protect remote module access based on allowed origins.
+## 📚 Table of Contents
 
----
+- [Overview](#-overview)
+- [Key Features](#-key-features)
+- [Technology Stack](#-technology-stack)
+- [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
+- [Development Tools](#-development-tools)
+- [Architecture](#-architecture)
+- [Security](#-security)
+- [Deployment](#-deployment)
+- [Contributing](#-contributing)
+- [License](#-license)
 
-## ✨ Features
+## 🎯 Overview
 
-- 🛠 **Webpack 5** + **Module Federation**: Share components between independently deployed apps.
-- ⚛️ **React 18** + **TypeScript**: Strong typing and best-in-class developer experience.
-- 🎨 **CSS**, **SCSS**, and **CSS Modules**: Flexible styling support out-of-the-box.
-- 🔥 **Hot Module Replacement**: Fast refresh support for instant development feedback.
-- 🔒 **Secured Microfrontends**: Express middleware validates allowed origins.
-- 📦 **Optimized Builds**: Production-ready configs with tree shaking and code splitting.
+This monorepo provides a complete foundation for building scalable microfrontend applications. It
+solves several key challenges in modern web development:
 
----
+- **Microfrontend Architecture**: Implement independent, deployable frontend applications that work
+  together seamlessly
+- **Code Sharing**: Share components and logic between applications efficiently using Webpack 5
+  Module Federation
+- **Type Safety**: Full TypeScript support across all applications and packages
+- **Development Workflow**: Streamlined development experience with hot reloading and custom CLI
+  tools
+- **Security**: Built-in protection for remote module access
+- **Scalability**: Monorepo structure that scales with your team and application needs
 
-## 🛠️ Prerequisites
+## 🌟 Key Features
 
-Ensure you have the following installed:
+### Core Features
 
-- [Node.js](https://nodejs.org/) (v20+ recommended)
-- [pnpm](https://pnpm.io/)
+- ⚡️ Webpack 5 Module Federation for component sharing
+- 🔒 Secure Express middleware for remote module access
+- 🔄 Hot Module Replacement (HMR) support
+- 📦 Optimized production builds
+- 🎨 CSS/SCSS Modules support
+- 🧪 Testing setup with Jest
 
----
+### Developer Experience
 
-## 📦 Installation
+- 🛠 Custom dev-cli tool for workflow automation
+- 📝 Comprehensive TypeScript support
+- 🧹 Unified code formatting and linting
+- 🔧 Shared configurations for all tools
+- 📚 Component library setup
 
-1. **Clone this repository**
+## 🔧 Technology Stack
 
-```bash
+- **Core**: React 18, TypeScript, Webpack 5
+- **Styling**: CSS Modules, SCSS
+- **Monorepo**: pnpm Workspaces, Lerna
+- **Quality**: ESLint, Prettier, Jest
+- **Development**: Custom CLI, Hot Module Replacement
+- **Build**: Babel, Webpack optimizations
+
+## 📁 Project Structure
+
+\`\`\` ├── apps/ # Microfrontend applications │ ├── host/ # Host application │ └── remote/ # Remote
+application ├── packages/ # Shared packages │ ├── dev-cli/ # Development workflow tools │ ├── ui/ #
+Shared UI components │ ├── utils/ # Common utilities │ └── configs/ # Shared configurations ├──
+scripts/ # Build and utility scripts └── package.json # Root package file \`\`\`
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Node.js >= 18
+- pnpm >= 9.0.0
+
+### Installation
+
+\`\`\`bash
+
+# Clone the repository
+
 git clone https://github.com/your-username/ts-microfrontend-monorepo-kit.git
-cd microfrontend-monorepo
-```
 
-2. **Install dependencies**
+# Install dependencies
 
-```bash
-npm install
-# or
 pnpm install
-```
+
+# Start development
+
+pnpm dev \`\`\`
+
+### Development Commands
+
+- \`pnpm dev\`: Start all applications in development mode
+- \`pnpm start:host\`: Start host application
+- \`pnpm start:remote\`: Start remote application
+- \`pnpm build\`: Build all applications
+- \`pnpm lint\`: Run linting
+- \`pnpm format\`: Format code
+
+## 🛠 Development Tools
+
+### Dev CLI (@repo/dev-cli)
+
+Custom CLI tool that provides:
+
+- Workflow automation
+- Development server management
+- Build process optimization
+- Project scaffolding
+
+Usage: \`\`\`bash
+
+# Create a new component
+
+dev-cli generate component
+
+# Run development servers
+
+dev-cli serve \`\`\`
+
+### Shared Configurations
+
+- TypeScript configurations
+- ESLint rules
+- Webpack configurations
+- Babel presets
+- Jest setup
+
+## 🏗 Architecture
+
+### Microfrontend Implementation
+
+1. **Host Application**: Main application shell
+
+   - Manages routing
+   - Handles authentication
+   - Orchestrates remote modules
+
+2. **Remote Applications**: Independent features
+   - Expose components via Module Federation
+   - Can be deployed independently
+   - Maintain their own state and routing
+
+### Module Federation
+
+- Dynamic loading of remote modules
+- Shared dependencies management
+- Runtime integration of components
+- Version control of shared modules
+
+## 🔒 Security
+
+### Remote Module Protection
+
+- Origin validation middleware
+- Configurable access controls
+- CORS protection
+- Rate limiting support
+
+### Best Practices
+
+- Secure module loading
+- Protected development endpoints
+- Environment-based configurations
+- Error boundary implementation
+
+## 📦 Deployment
+
+### Build Process
+
+\`\`\`bash
+
+# Production build
+
+pnpm build
+
+# Environment-specific builds
+
+NODE_ENV=staging pnpm build \`\`\`
+
+### Output
+
+- Optimized bundles
+- Source maps
+- Asset optimization
+- Cache management
+
+## 🤝 Contributing
+
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process
+for submitting pull requests.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE.md](license.md) file for details.
 
 ---
 
-## ⚡️ Development Workflow
+## 💬 Support
 
-This monorepo includes multiple microfrontend apps (both hosts and remotes). You can run them
-separately or together.
+For questions and support, please open an issue in the GitHub repository.
 
-### 🧑‍✈️ Start the Host App
-
-```bash
-npm run start:host
-# or
-pnpm start:host
-```
-
-> 🌐 Available at [http://localhost:3000](http://localhost:3000)
-
-### 🛰️ Start the Remote App
-
-```bash
-npm run start:remote
-# or
-pnpm start:remote
-```
-
-> 🌐 Available at [http://localhost:3001](http://localhost:3001)
-
----
-
-## 🔐 Securing Remote Modules
-
-Remote apps are served using an **Express** server with **custom middleware** to protect module
-federation endpoints.
-
-Middleware functionality:
-
-- ✅ Only allow requests from whitelisted origins
-- 🛡️ Block unauthorized or suspicious requests
-- 🧩 Easily customizable to add auth, IP restrictions, etc.
-
-> 📝 Modify `server/middleware/allowedOrigins.ts` to adjust the security logic.
-
----
-
-## 🔧 Webpack Configuration Overview
-
-- **webpack.common.ts**: Shared Webpack config.
-- **webpack.dev.ts**: Development config with source maps and HMR.
-- **webpack.prod.ts**: Optimized production build with tree shaking and minification.
-- **ModuleFederationPlugin**: Used to expose or consume remote modules dynamically at runtime.
-
-Example Remote Config:
-
-```ts
-new ModuleFederationPlugin({
-	name: 'remoteApp',
-	filename: 'remoteEntry.js',
-	exposes: {
-		'./Button': './src/components/Button',
-	},
-	shared: {
-		react: { singleton: true, eager: true },
-		'react-dom': { singleton: true, eager: true },
-	},
-});
-```
-
-Example Host Usage:
-
-```tsx
-const RemoteButton = React.lazy(() => import('remoteApp/Button'));
-
-<Suspense fallback={<div>Loading...</div>}>
-	<RemoteButton />
-</Suspense>;
-```
-
----
-
-## 🏗️ Building for Production
-
-### Build Host App
-
-```bash
-npm run build:host
-# or
-pnpm build:host
-```
-
-### Build Remote App
-
-```bash
-npm run build:remote
-# or
-pnpm build:remote
-```
-
-Outputs are placed in the `dist/` directory, ready for deployment 🚀.
-
----
-
-## 🌐 Multi-Environment Support
-
-Environment-specific builds are easy to configure using `NODE_ENV` values (e.g., `development`,
-`staging`, `production`).
-
-Example (for staging):
-
-```bash
-"build:staging:host": "NODE_ENV=staging webpack --config webpack.prod.ts"
-```
-
----
-
-## 💡 How Microfrontends Work
-
-1. **Remote apps** expose components using `ModuleFederationPlugin`.
-2. **Host apps** dynamically load these components using `React.lazy` at runtime.
-3. **Express middleware** ensures only trusted requests reach remote modules.
-4. **Independent deployment**: Update one app without affecting the others!
-
----
-
-## 🧠 Developer Tips
-
-- 🔥 Use Hot Module Replacement for faster dev cycles.
-- 🔒 Keep the middleware updated for better security practices.
-- ⚙️ Customize Webpack settings as needed for new features (e.g., SASS loader tweaks).
-- 🧪 Wrap remote components in error boundaries for safer imports.
-
-Example Error Handling:
-
-```tsx
-<Suspense fallback={<div>Loading...</div>}>
-	<ErrorBoundary fallback={<div>Failed to load remote module.</div>}>
-		<RemoteComponent />
-	</ErrorBoundary>
-</Suspense>
-```
-
----
-
-## 💬 Questions? Feedback?
-
-Feel free to open an issue, suggest improvements, or ⭐️ the repo if you find it helpful!
-
----
+⭐️ If you find this project helpful, please give it a star!
