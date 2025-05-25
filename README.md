@@ -3,7 +3,8 @@
 ![Banner](screenshots/banner.png)
 
 A production-ready monorepo boilerplate for building scalable microfrontend applications, powered by
-modern web technologies and best practices.
+modern web technologies and best practices. Built entirely from scratch without using any cli tools,
+providing complete control over the build configuration and development workflow.
 
 ## �� Table of Contents
 
@@ -33,6 +34,8 @@ solves several key challenges in modern web development:
   tools
 - 🛡️ **Security**: Built-in protection for remote module access
 - 📈 **Scalability**: Monorepo structure that scales with your team and application needs
+- 🎛️ **Full Configuration Control**: Custom webpack configuration built from ground up, offering
+  maximum flexibility
 
 ## ✨ Key Features
 
@@ -44,6 +47,22 @@ solves several key challenges in modern web development:
 - 📦 Optimized production builds
 - 🎨 CSS/SCSS Modules support
 - 🧪 Testing setup with Jest
+
+### 🛠️ Custom Build Configuration
+
+- 🎯 **Built From Scratch**: No black-box configurations from Create React App or Vite
+- ⚙️ **Custom Webpack Setup**: Full control over build process and optimizations
+- 🔧 **Extensible Configuration**: Easy to add new features and customize build behavior
+- 📦 **Optimized Bundling**: Fine-tuned webpack configuration for optimal performance
+- 🔄 **Hot Reload**: Custom-configured development server with HMR
+- 🎨 **Asset Handling**: Customized loaders for various file types
+- 🚀 **Performance Optimizations**:
+  - Code splitting
+  - Tree shaking
+  - Chunk optimization
+  - Dynamic imports
+  - Module federation
+  - Cache optimization
 
 ### 👨‍💻 Developer Experience
 
@@ -62,6 +81,43 @@ solves several key challenges in modern web development:
 - 🛠 **Development**: Custom CLI, Hot Module Replacement
 - 🏗 **Build**: Babel, Webpack optimizations
 
+### 🎛️ Webpack Configuration Highlights
+
+```javascript
+// Example of the flexible webpack configuration
+module.exports = {
+	// Core build optimization
+	optimization: {
+		splitChunks: {
+			chunks: 'all',
+			// Customizable chunking strategy
+		},
+		runtimeChunk: 'single',
+	},
+
+	// Module Federation for micro-frontends
+	plugins: [
+		new ModuleFederationPlugin({
+			// Customizable sharing strategy
+			shared: {
+				react: { singleton: true },
+				'react-dom': { singleton: true },
+			},
+		}),
+	],
+
+	// Extensible loader configuration
+	module: {
+		rules: [
+			// TypeScript/JavaScript processing
+			// CSS/SCSS handling
+			// Asset optimization
+			// Custom loader configurations
+		],
+	},
+};
+```
+
 ## 📁 Project Structure
 
 ```
@@ -75,6 +131,16 @@ solves several key challenges in modern web development:
 │   └── configs/        # Shared configurations
 ├── scripts/            # Build and utility scripts
 └── package.json        # Root package file
+```
+
+### 🔧 Build Configuration Structure
+
+```
+├── webpack/
+│   ├── common.js        # Shared webpack configuration
+│   ├── development.js   # Development-specific settings
+│   ├── production.js    # Production optimizations
+│   └── module-fed.js    # Module Federation setup
 ```
 
 ## 🚀 Getting Started
