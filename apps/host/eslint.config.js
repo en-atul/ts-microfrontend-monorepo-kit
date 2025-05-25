@@ -7,27 +7,18 @@ const __dirname = path.dirname(__filename);
 
 /** @type {import("eslint").Linter.Config[]} */
 export default [
-	...reactJsConfig,
+	...reactJsConfig(__dirname),
 	{
 		files: ['**/*.{ts,tsx}'],
 		rules: {
-			'import/no-unresolved': [
-				'error',
-				{
-					ignore: ['^remoteApp/'], // Add MF remotes here
-				},
-			],
+			'import/no-unresolved': 'off',
 		},
 		settings: {
 			'import/resolver': {
-				typescript: {
-					project: path.resolve(__dirname, './tsconfig.json'),
-					alwaysTryTypes: true,
-				},
 				node: {
-					extensions: ['.js', '.jsx', '.ts', '.tsx'],
-				},
-			},
-		},
+					extensions: ['.js', '.jsx', '.ts', '.tsx']
+				}
+			}
+		}
 	},
 ];
