@@ -2,3 +2,4 @@ node_modules
 build
 /.github/*
 license.md
+pnpm-lock.yaml

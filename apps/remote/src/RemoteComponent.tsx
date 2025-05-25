@@ -10,7 +10,7 @@ function usePrevious<T>(value: T): T {
 	return ref.current;
 }
 
-export default function RemoteComponent() {
+const RemoteComponent = () => {
 	const [seconds, setSeconds] = useState(0);
 	const [isRunning, setIsRunning] = useState(false);
 	const [isPaused, setIsPaused] = useState(false);
@@ -124,4 +124,5 @@ export default function RemoteComponent() {
 			</div>
 		</div>
 	);
-}
+};
+export default RemoteComponent;

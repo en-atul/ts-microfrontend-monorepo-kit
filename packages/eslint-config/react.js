@@ -1,3 +1,4 @@
+import path from 'path';
 import tseslint from 'typescript-eslint';
 import pluginReactHooks from 'eslint-plugin-react-hooks';
 import pluginReact from 'eslint-plugin-react';
@@ -6,8 +7,8 @@ import pluginPrettier from 'eslint-plugin-prettier';
 import globals from 'globals';
 import { config as baseConfig } from './base.js';
 
-/** @type {import("eslint").Linter.FlatConfig[]} */
-export const reactJsConfig = [
+/** @type {(projectDirName: string) => import("eslint").Linter.Config[]} */
+export const reactJsConfig = (projectDirName) => [
 	...baseConfig,
 	{
 		files: ['**/*.ts', '**/*.tsx'],
@@ -16,6 +17,8 @@ export const reactJsConfig = [
 			parserOptions: {
 				ecmaVersion: 2020,
 				sourceType: 'module',
+				project: path.resolve(projectDirName, './tsconfig.json'),
+				tsconfigRootDir: projectDirName,
 			},
 			globals: {
 				...globals.browser,
@@ -56,6 +59,15 @@ export const reactJsConfig = [
 					format: ['camelCase'],
 				},
 				{
+					selector: 'variable',
+					types: ['function'],
+					format: ['PascalCase'],
+					filter: {
+						regex: '^[A-Z]',
+						match: true,
+					},
+				},
+				{
 					selector: 'parameter',
 					format: ['camelCase'],
 					leadingUnderscore: 'allow',
@@ -71,7 +83,7 @@ export const reactJsConfig = [
 					prefix: ['T', 'K'],
 				},
 				{
-					selector: ['memberLike', 'variableLike'],
+					selector: ['variableLike'],
 					types: ['boolean'],
 					format: ['PascalCase'],
 					prefix: ['can', 'did', 'has', 'is', 'must', 'needs', 'should', 'will'],

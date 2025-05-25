@@ -3,9 +3,11 @@ import path from 'path';
 import { promisify } from 'util';
 
 import { Command, Flags } from '@oclif/core';
-import { glob } from 'glob';
+// @ts-ignore
+import micromatch from 'micromatch';
 import ora from 'ora';
 import pc from 'picocolors';
+import simpleGit from 'simple-git';
 
 const execAsync = promisify(exec);
 
@@ -35,50 +37,51 @@ export default class Lint extends Command {
 		}),
 	};
 
-	private getFileCount = async (pattern: string): Promise<number> => {
-		const files = await glob(pattern, { ignore: ['**/node_modules/**', '**/dist/**'] });
-		return files.length;
-	};
-
-	private formatTime = (ms: number): string => {
-		return ms < 1000 ? `${ms}ms` : `${(ms / 1000).toFixed(2)}s`;
-	};
-
-	private async getStagedFiles(pattern: string): Promise<string[]> {
-		const { stdout: diffOutput } = await execAsync('git diff --cached --name-only');
-		return diffOutput
-			.split('\n')
-			.filter((f) => f.match(pattern))
-			.filter(Boolean)
-			.map((f) => path.resolve(f));
-	}
-
-	private async getAllTypeScriptFiles(): Promise<string[]> {
-		const { stdout } = await execAsync(
-			'find apps packages -type f -name "*.ts" -o -name "*.tsx" | grep -v "node_modules\\|dist"',
-		);
-		return stdout
-			.split('\n')
-			.filter(Boolean)
-			.map((f) => path.resolve(f));
-	}
-
-	private async findEslintConfigs(): Promise<string[]> {
-		const { stdout } = await execAsync(
-			'find apps packages -type f -name "eslint.config.js" | grep -v "node_modules\\|dist"',
-		);
-		return stdout
-			.split('\n')
-			.filter(Boolean)
-			.map((f) => path.resolve(f));
+	private getRootDir(): string {
+		return process.cwd().includes('packages/dev-cli')
+			? path.resolve(process.cwd(), '../..')
+			: process.cwd();
 	}
 
 	private async runESLint(fix: boolean, stagedOnly: boolean): Promise<LintResult> {
 		const startTime = Date.now();
+		const rootDir = this.getRootDir();
 
 		try {
-			// Find all eslint config files
+			if (stagedOnly) {
+				const git = simpleGit(rootDir);
+				const { staged } = await git.status();
+				const tsFiles = micromatch(staged, ['**/*.ts', '**/*.tsx']);
+
+				if (tsFiles.length === 0) {
+					return {
+						success: true,
+						output: 'No TypeScript files staged.',
+						duration: Date.now() - startTime,
+					};
+				}
+
+				const cmd = `pnpm eslint --config packages/eslint-config/base.js ${tsFiles.map((f: string) => `"${f}"`).join(' ')}${fix ? ' --fix' : ''}`;
+
+				try {
+					const { stdout } = await execAsync(cmd, { cwd: rootDir });
+					return {
+						success: true,
+						output: stdout || 'No issues found.',
+						duration: Date.now() - startTime,
+					};
+				} catch (error) {
+					const err = error as ExecError & { stdout?: string; stderr?: string };
+					return {
+						success: false,
+						output: err.stderr || err.stdout || err.message,
+						duration: Date.now() - startTime,
+					};
+				}
+			}
+
 			const configs = await this.findEslintConfigs();
+
 			if (!configs.length) {
 				return {
 					success: true,
@@ -87,34 +90,15 @@ export default class Lint extends Command {
 				};
 			}
 
-			// Run ESLint for each config directory
 			const results = await Promise.all(
 				configs.map(async (configPath) => {
 					const configDir = path.dirname(configPath);
-					let files: string[];
+					const files = ['**/*.ts', '**/*.tsx'];
 
-					if (stagedOnly) {
-						// Get staged files relative to the config directory
-						const stagedFiles = await this.getStagedFiles('\.(ts|tsx)$');
-						files = stagedFiles
-							.filter((f) => f.startsWith(configDir))
-							.map((f) => path.relative(configDir, f));
-					} else {
-						files = ['**/*.ts', '**/*.tsx'];
-					}
-
-					if (files.length === 0) {
-						return {
-							success: true,
-							output: `${path.basename(configDir)}: No files to lint`,
-							duration: Date.now() - startTime,
-						};
-					}
-
-					const cmd = `cd "${configDir}" && pnpm eslint ${files.map((f) => `"${f}"`).join(' ')}${fix ? ' --fix' : ''}`;
+					const cmd = `cd "${configDir}" && pnpm eslint --config packages/eslint-config/base.js ${files.map((f) => `"${f}"`).join(' ')}${fix ? ' --fix' : ''}`;
 
 					try {
-						const { stdout, stderr } = await execAsync(cmd);
+						const { stdout } = await execAsync(cmd, { cwd: rootDir });
 						return {
 							success: true,
 							output: `${path.basename(configDir)}: ${stdout || 'No issues found.'}`,
@@ -154,13 +138,16 @@ export default class Lint extends Command {
 
 	private async runPrettier(fix: boolean, stagedOnly: boolean): Promise<LintResult> {
 		const startTime = Date.now();
+		const rootDir = this.getRootDir();
+
 		try {
 			let cmd: string;
 
 			if (stagedOnly) {
-				const stagedFiles = await this.getStagedFiles('\.(ts|tsx|md)$');
+				const git = simpleGit(rootDir);
+				const { staged } = await git.status();
 
-				if (!stagedFiles.length) {
+				if (!staged.length) {
 					return {
 						success: true,
 						output: 'No staged files to format.',
@@ -168,12 +155,12 @@ export default class Lint extends Command {
 					};
 				}
 
-				cmd = `pnpm prettier ${fix ? '--write' : '--check'} ${stagedFiles.map((f) => `"${f}"`).join(' ')}`;
+				cmd = `pnpm prettier ${fix ? '--write' : '--check'} ${staged.map((f: string) => `"${f}"`).join(' ')}`;
 			} else {
-				cmd = `pnpm prettier ${fix ? '--write' : '--check'} "**/*.{ts,tsx,md}"`;
+				cmd = `pnpm prettier ${fix ? '--write' : '--check'} "**/*.{ts,tsx,js,jsx,json,md,mdx,css,scss,html,yaml,yml}"`;
 			}
 
-			const { stdout } = await execAsync(cmd);
+			const { stdout } = await execAsync(cmd, { cwd: rootDir });
 			return {
 				success: true,
 				output: stdout,
@@ -189,21 +176,22 @@ export default class Lint extends Command {
 		}
 	}
 
+	private async findEslintConfigs(): Promise<string[]> {
+		const rootDir = this.getRootDir();
+		const { stdout } = await execAsync(
+			'find apps packages -type f -name "eslint.config.js" | grep -v "node_modules\\|dist"',
+			{ cwd: rootDir },
+		);
+		return stdout
+			.split('\n')
+			.filter(Boolean)
+			.map((f) => path.resolve(rootDir, f));
+	}
+
 	private printHeader(fix: boolean, stagedOnly: boolean) {
 		this.log('\n' + pc.cyan(pc.bold('🚀 Running Code Quality Checks')));
 		this.log(pc.dim(`Mode: ${fix ? 'Auto-fix enabled' : 'Check only'}`));
 		this.log(pc.dim(`Scope: ${stagedOnly ? 'Staged files only' : 'All files'}\n`));
-	}
-
-	private printFileCount(tsFiles: number, mdFiles: number) {
-		const total = tsFiles + mdFiles;
-		this.log(
-			pc.dim(
-				`Found ${pc.bold(total)} files to check: ` +
-					`${pc.cyan(tsFiles)} TypeScript, ` +
-					`${pc.cyan(mdFiles)} other files\n`,
-			),
-		);
 	}
 
 	private printSummary(eslintResult: LintResult, prettierResult: LintResult) {
@@ -234,22 +222,36 @@ export default class Lint extends Command {
 		this.log(pc.dim(`Total time: ${this.formatTime(totalTime)}\n`));
 	}
 
+	private formatTime = (ms: number): string => {
+		return ms < 1000 ? `${ms}ms` : `${(ms / 1000).toFixed(2)}s`;
+	};
+
 	async run() {
 		const { flags } = await this.parse(Lint);
 		const stagedOnly = !flags.all;
 
 		try {
-			// Print intro
+			const git = simpleGit(this.getRootDir());
+			const { staged } = await git.status();
+
+			if (stagedOnly && staged.length === 0) {
+				this.log('\n' + pc.yellow('No staged files found. Nothing to check.\n'));
+				return;
+			}
+
 			this.printHeader(flags.fix, stagedOnly);
 
-			// Count files
-			const tsFiles = await this.getFileCount('**/*.{ts,tsx}');
-			const mdFiles = await this.getFileCount('**/*.md');
-			this.printFileCount(tsFiles, mdFiles);
+			const tsFiles = micromatch(staged, ['**/*.ts', '**/*.tsx']).length;
+			const otherFiles = staged.length - tsFiles;
+			this.log(
+				pc.dim(
+					`Found ${pc.bold(staged.length)} staged files to check: ` +
+						`${pc.cyan(tsFiles)} TypeScript, ` +
+						`${pc.cyan(otherFiles)} other files\n`,
+				),
+			);
 
-			// Spacer before tasks
-
-			// 🔧 ESLint
+			// Run ESLint
 			const eslintSpinner = ora({
 				prefixText: '  ',
 				text: 'Running ESLint...',
@@ -270,7 +272,7 @@ export default class Lint extends Command {
 				});
 			}
 
-			// 🔧 Prettier
+			// Run Prettier
 			const prettierSpinner = ora({
 				prefixText: '  ',
 				text: 'Running Prettier...',
