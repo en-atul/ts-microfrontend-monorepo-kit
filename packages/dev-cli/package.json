@@ -27,7 +27,6 @@
 		"@oclif/core": "^3.19.2",
 		"@types/node": "^22.15.18",
 		"@types/ora": "3.2.0",
-		"glob": "^10.3.10",
 		"micromatch": "4.0.8",
 		"ora": "^5.4.1",
 		"picocolors": "^1.0.0",
