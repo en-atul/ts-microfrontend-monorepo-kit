@@ -5,38 +5,38 @@
 A production-ready monorepo boilerplate for building scalable microfrontend applications, powered by
 modern web technologies and best practices.
 
-## 📚 Table of Contents
+## �� Table of Contents
 
-- [Overview](#-overview)
-- [Key Features](#-key-features)
-- [Technology Stack](#-technology-stack)
-- [Project Structure](#-project-structure)
-- [Getting Started](#-getting-started)
-- [Development Tools](#-development-tools)
-- [Architecture](#-architecture)
-- [Security](#-security)
-- [Deployment](#-deployment)
-- [Contributing](#-contributing)
-- [License](#-license)
+- [🎯 Overview](#-overview)
+- [✨ Key Features](#-key-features)
+- [⚙️ Technology Stack](#-technology-stack)
+- [📁 Project Structure](#-project-structure)
+- [🚀 Getting Started](#-getting-started)
+- [🛠 Development Tools](#-development-tools)
+- [🏗 Architecture](#-architecture)
+- [🔒 Security](#-security)
+- [📦 Deployment](#-deployment)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
 
 ## 🎯 Overview
 
 This monorepo provides a complete foundation for building scalable microfrontend applications. It
 solves several key challenges in modern web development:
 
-- **Microfrontend Architecture**: Implement independent, deployable frontend applications that work
-  together seamlessly
-- **Code Sharing**: Share components and logic between applications efficiently using Webpack 5
+- 🏢 **Microfrontend Architecture**: Implement independent, deployable frontend applications that
+  work together seamlessly
+- 🔄 **Code Sharing**: Share components and logic between applications efficiently using Webpack 5
   Module Federation
-- **Type Safety**: Full TypeScript support across all applications and packages
-- **Development Workflow**: Streamlined development experience with hot reloading and custom CLI
+- 📝 **Type Safety**: Full TypeScript support across all applications and packages
+- ⚡️ **Development Workflow**: Streamlined development experience with hot reloading and custom CLI
   tools
-- **Security**: Built-in protection for remote module access
-- **Scalability**: Monorepo structure that scales with your team and application needs
+- 🛡️ **Security**: Built-in protection for remote module access
+- 📈 **Scalability**: Monorepo structure that scales with your team and application needs
 
-## 🌟 Key Features
+## ✨ Key Features
 
-### Core Features
+### 🎨 Core Features
 
 - ⚡️ Webpack 5 Module Federation for component sharing
 - 🔒 Secure Express middleware for remote module access
@@ -45,149 +45,152 @@ solves several key challenges in modern web development:
 - 🎨 CSS/SCSS Modules support
 - 🧪 Testing setup with Jest
 
-### Developer Experience
+### 👨‍💻 Developer Experience
 
 - 🛠 Custom dev-cli tool for workflow automation
 - 📝 Comprehensive TypeScript support
 - 🧹 Unified code formatting and linting
-- 🔧 Shared configurations for all tools
+- ⚙️ Shared configurations for all tools
 - 📚 Component library setup
 
-## 🔧 Technology Stack
+## ⚙️ Technology Stack
 
-- **Core**: React 18, TypeScript, Webpack 5
-- **Styling**: CSS Modules, SCSS
-- **Monorepo**: pnpm Workspaces, Lerna
-- **Quality**: ESLint, Prettier, Jest
-- **Development**: Custom CLI, Hot Module Replacement
-- **Build**: Babel, Webpack optimizations
+- 🔧 **Core**: React 18, TypeScript, Webpack 5
+- 🎨 **Styling**: CSS Modules, SCSS
+- 📦 **Monorepo**: pnpm Workspaces, Lerna
+- ✨ **Quality**: ESLint, Prettier, Jest
+- 🛠 **Development**: Custom CLI, Hot Module Replacement
+- 🏗 **Build**: Babel, Webpack optimizations
 
 ## 📁 Project Structure
 
-\`\`\` ├── apps/ # Microfrontend applications │ ├── host/ # Host application │ └── remote/ # Remote
-application ├── packages/ # Shared packages │ ├── dev-cli/ # Development workflow tools │ ├── ui/ #
-Shared UI components │ ├── utils/ # Common utilities │ └── configs/ # Shared configurations ├──
-scripts/ # Build and utility scripts └── package.json # Root package file \`\`\`
+```
+├── apps/                # Microfrontend applications
+│   ├── host/           # Host application
+│   └── remote/         # Remote application
+├── packages/           # Shared packages
+│   ├── dev-cli/        # Development workflow tools
+│   ├── ui/             # Shared UI components
+│   ├── utils/          # Common utilities
+│   └── configs/        # Shared configurations
+├── scripts/            # Build and utility scripts
+└── package.json        # Root package file
+```
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### 📋 Prerequisites
 
 - Node.js >= 18
 - pnpm >= 9.0.0
 
-### Installation
+### ⚡️ Installation
 
-\`\`\`bash
-
+```bash
 # Clone the repository
-
 git clone https://github.com/your-username/ts-microfrontend-monorepo-kit.git
 
 # Install dependencies
-
 pnpm install
 
 # Start development
+pnpm dev
+```
 
-pnpm dev \`\`\`
+### 🔧 Development Commands
 
-### Development Commands
-
-- \`pnpm dev\`: Start all applications in development mode
-- \`pnpm start:host\`: Start host application
-- \`pnpm start:remote\`: Start remote application
-- \`pnpm build\`: Build all applications
-- \`pnpm lint\`: Run linting
-- \`pnpm format\`: Format code
+- `pnpm dev`: Start all applications in development mode
+- `pnpm start:host`: Start host application
+- `pnpm start:remote`: Start remote application
+- `pnpm build`: Build all applications
+- `pnpm lint`: Run linting
+- `pnpm format`: Format code
 
 ## 🛠 Development Tools
 
-### Dev CLI (@repo/dev-cli)
+### 🤖 Dev CLI (@repo/dev-cli)
 
 Custom CLI tool that provides:
 
-- Workflow automation
-- Development server management
-- Build process optimization
-- Project scaffolding
+- 🔄 Workflow automation
+- 🖥️ Development server management
+- ⚡️ Build process optimization
+- 🏗 Project scaffolding
 
-Usage: \`\`\`bash
+Usage:
 
+```bash
 # Create a new component
-
 dev-cli generate component
 
 # Run development servers
+dev-cli serve
+```
 
-dev-cli serve \`\`\`
+### ⚙️ Shared Configurations
 
-### Shared Configurations
-
-- TypeScript configurations
-- ESLint rules
-- Webpack configurations
-- Babel presets
-- Jest setup
+- 📝 TypeScript configurations
+- 🧹 ESLint rules
+- 🔧 Webpack configurations
+- 🛠 Babel presets
+- 🧪 Jest setup
 
 ## 🏗 Architecture
 
-### Microfrontend Implementation
+### 🏢 Microfrontend Implementation
 
 1. **Host Application**: Main application shell
 
-   - Manages routing
-   - Handles authentication
-   - Orchestrates remote modules
+   - 🧭 Manages routing
+   - 🔐 Handles authentication
+   - 🎮 Orchestrates remote modules
 
 2. **Remote Applications**: Independent features
-   - Expose components via Module Federation
-   - Can be deployed independently
-   - Maintain their own state and routing
+   - 📦 Expose components via Module Federation
+   - 🚀 Can be deployed independently
+   - 💾 Maintain their own state and routing
 
-### Module Federation
+### 🔄 Module Federation
 
-- Dynamic loading of remote modules
-- Shared dependencies management
-- Runtime integration of components
-- Version control of shared modules
+- 📥 Dynamic loading of remote modules
+- 🔄 Shared dependencies management
+- ⚡️ Runtime integration of components
+- 📈 Version control of shared modules
 
 ## 🔒 Security
 
-### Remote Module Protection
+### 🛡️ Remote Module Protection
 
-- Origin validation middleware
-- Configurable access controls
-- CORS protection
-- Rate limiting support
+- ✅ Origin validation middleware
+- 🔐 Configurable access controls
+- 🌐 CORS protection
+- ⚡️ Rate limiting support
 
-### Best Practices
+### 📋 Best Practices
 
-- Secure module loading
-- Protected development endpoints
-- Environment-based configurations
-- Error boundary implementation
+- 🔐 Secure module loading
+- 🛡️ Protected development endpoints
+- ⚙️ Environment-based configurations
+- 🔄 Error boundary implementation
 
 ## 📦 Deployment
 
-### Build Process
+### 🚀 Build Process
 
-\`\`\`bash
-
+```bash
 # Production build
-
 pnpm build
 
 # Environment-specific builds
+NODE_ENV=staging pnpm build
+```
 
-NODE_ENV=staging pnpm build \`\`\`
+### 📤 Output
 
-### Output
-
-- Optimized bundles
-- Source maps
-- Asset optimization
-- Cache management
+- 📦 Optimized bundles
+- 🗺️ Source maps
+- 🎨 Asset optimization
+- ⚡️ Cache management
 
 ## 🤝 Contributing
 
