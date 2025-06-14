@@ -45,11 +45,6 @@ deem appropriate, including:
 Project maintainers have the right and responsibility to remove, edit, or reject comments, commits,
 code, wiki edits, issues, and other contributions that are not aligned with this Code of Conduct.
 
-<!-- ## How to Report
-
-If you encounter behavior that violates this Code of Conduct, please report it immediately by
-contacting the project maintainers at **[atul@gmail.com]**. -->
-
 We will review the situation and take appropriate action as necessary. All reports will be handled
 in a confidential manner.
 
